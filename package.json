@@ -1,0 +1,23 @@
+{
+  "name": "ticket-price-interpreter",
+  "version": "1.0.0",
+  "description": "A ticket price interpreter",
+  "main": "index.js",
+  "dependencies": {
+    "request": "^2.83.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NoahM32/TicketPriceInterpreter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NoahM32/TicketPriceInterpreter/issues"
+  },
+  "homepage": "https://github.com/NoahM32/TicketPriceInterpreter#readme"
+}
