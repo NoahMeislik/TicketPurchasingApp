@@ -1,1 +1,1 @@
-const eventSearch = require('./modules/eventsearch.js');
+const eventSearch = require('./Ticket-Master-API/modules/eventsearch.js');
