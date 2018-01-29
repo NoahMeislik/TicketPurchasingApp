@@ -13,8 +13,10 @@ const eventEndpoint = "https://app.ticketmaster.com/discovery/v2/events.json?cou
 let getPreviousEventData = function(){
         request(eventEndpoint, (error, response, body) => {
             if (error || response.statusCode !== 200) return console.log(`Error: ${error} - Status Code: ${response.statusCode}`);
-            fs.writeFile(config.paths.previousEventData,JSON.stringify(body));
-            console.log("Written event data to file.");
+            fs.writeFile(config.paths.previousEventData,JSON.stringify(body), (err) => {
+                if(err) throw err
+                console.log("Written event data to file.");
+            });
         });     
 }
 
