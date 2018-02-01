@@ -5,20 +5,47 @@ config = require(path.resolve('./config/config.js')),
 moment = require('moment'),
 _ = require('lodash');
 
-const eventEndpoint = "https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&apikey="+config.apiKey+"&endDateTime="+moment(Date.now()).format("YYYY-MM-DDTHH:mm:ssZ");
 
 
 
 
 //Parameters for event date search YYYY-MM-DDTHH:mm:ssZ
-let getPreviousEventData = function(){
+let getEventData = function(){
+        let eventEndpoint = "https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&apikey="+config.apiKey+"&onsaleStartDateTime="+moment(Date.now()).format("YYYY-MM-DDTHH:mm:ssZ")+"&size=200";
+
         request(eventEndpoint, (error, response, body) => {
             if (error || response.statusCode !== 200) return console.log(`Error: ${error} - Status Code: ${response.statusCode}`);
             fs.writeFile(config.ticketMasterPaths.previousEventData,JSON.stringify(body), (err) => {
                 if(err) throw err
-                console.log("Written event data to file.");
+                console.log("Written first page of event data to file.");
             });
-        });     
+
+            
+
+        });
+
+
+        let firstPage = JSON.parse(require(config.ticketMasterPaths.previousEventData));
+        numPages = firstPage['page']['totalPages'];
+        console.log(numPages)
+
+        setTimeout(() => {
+
+        for (let index = 1; index < numPages; index++) {
+            let eventEndpoint = "https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&apikey="+config.apiKey+"&startDateTime="+moment(Date.now()).format("YYYY-MM-DDTHH:mm:ssZ")+"&size=200"+"&page="+index;
+            request(eventEndpoint, (error, response, body) => {
+                
+                    if (error || response.statusCode !== 200) return console.log(`Error: ${error} - Status Code: ${response.statusCode}`);
+                    fs.appendFile(config.ticketMasterPaths.previousEventData,JSON.stringify(body), (err) => {
+                        if(err) throw err
+                        console.log(`Page ${index} written to file`);
+                    });
+                })
+            };
+        },5000);
+
+            
+       
 }
 
 let parseEventData = function() {
@@ -30,10 +57,11 @@ let parseEventData = function() {
 
 
 // Grabs fresh event data
-getPreviousEventData();
-parseEventData();
-setInterval(() => {
-    getPreviousEventData();
-    parseEventData();
-},config.eventSearchTimer);
+// getPreviousEventData();
+// parseEventData();
+// setInterval(() => {
+//     getPreviousEventData();
+//     parseEventData();
+// },config.eventSearchTimer);
 
+getEventData();
