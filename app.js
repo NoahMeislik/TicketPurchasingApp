@@ -13,6 +13,9 @@ app.use(bodyParse.json());
 app.use(bodyParse.urlencoded({extended: true}));
 
 
+//--/////////////////////--//
+//--    Personal API    --//
+//--////////////////////--//
 //Routes
 var userRoutes = require(config.personalApiPaths.routes.userRoutes);
 
@@ -30,5 +33,7 @@ app.listen(3000, function(){
 
 
 
-
-const eventSearch = require('./Ticket-Master-API/modules/eventsearch.js');
+//--/////////////////////--//
+//--    TicketMasterAPI    --//
+//--////////////////////--//
+const eventSearch = require('./Ticket-Master-API/modules/getData.js');

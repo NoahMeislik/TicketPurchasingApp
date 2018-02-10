@@ -7,6 +7,7 @@
     "bcrypt": "^1.0.3",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
+    "download": "^6.2.5",
     "express": "^4.16.2",
     "gzipy": "0.0.2",
     "json-web-token": "^2.1.3",

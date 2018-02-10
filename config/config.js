@@ -6,7 +6,7 @@ module.exports = {
     createUserToken : "This is a meme and a half!",
     APP_SECRET : "This is also a meme and a half!",
     ticketMasterPaths: {
-        previousEventData : path.resolve('./Ticket-Master-API/data/eventdata/previousEventData.json'),
+        eventData : path.resolve('./Ticket-Master-API/data/'),
     },
     personalApiPaths : {
         models: {
