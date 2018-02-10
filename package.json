@@ -8,6 +8,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
+    "gzipy": "0.0.2",
     "json-web-token": "^2.1.3",
     "jsonwebtoken": "^8.1.1",
     "lodash": "^4.17.4",
