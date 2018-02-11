@@ -4,10 +4,8 @@ module.exports = {
     eventSearchTimer : 86400*1000,
     mongoDB: "mongodb://test:test@ds117868.mlab.com:17868/ticket-price-interpreter",
     createUserToken : "This is a meme and a half!",
-    APP_SECRET : "This is also a meme and a half!",
-    ticketMasterPaths: {
-        eventData : path.resolve('./Ticket-Master-API/data/'),
-    },
+    appSecret : "This is also a meme and a half!",
+    port: 3000,
     personalApiPaths : {
         models: {
             user : path.resolve('./Personal-API/models/user.js'),

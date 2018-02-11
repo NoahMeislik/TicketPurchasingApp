@@ -1,76 +1,47 @@
-const request = require('request'),
-path = require('path'),
-fs = require('fs'),
-config = require(path.resolve('./config/config.js')),
-moment = require('moment'),
-_ = require('lodash');
-const download = require('download');
-var gzipy = require('gzipy');
+const zlib = require('zlib')
+const oboe = require('oboe')
+const got = require('got')
+const path = require('path')
+const config = require(path.resolve('./config/config.js'))
+const url = `http://app.ticketmaster.com/dc/feeds/v1/events.json?apikey=${config.apiKey}`
+const gunzip = zlib.createGunzip()
 
-//Parameters for event date search YYYY-MM-DDTHH:mm:ssZ
-// let getEventData = function(){
+// init mongo connection
+const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+mongoose.connect(config.mongoDB);
 
-//         let eventEndpoint = "https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&apikey="+config.apiKey+"&startDateTime="+time+"Z&size=200";
 
-//         request(eventEndpoint, (error, response, body) => {
-//             if (error || response.statusCode !== 200) return console.log(`Error: ${error} - Status Code: ${response.statusCode}`);
-//             fs.writeFile(config.ticketMasterPaths.previousEventData,JSON.stringify(body), (err) => {
-//                 if(err) throw err
-//                 console.log("Written first page of event data to file.");
-//                 getAllEventData();
-//             });
-//         });
-        
-// }
+// TODO: Need to organise this model better, need to retrieve the data that needs to be inserted into the collection
+const Ticket = mongoose.model('security_archives', mongoose.Schema({
+  eventId: String,
+  primaryEventUrl: String,
+  resaleEventUrl: String,
+  eventName: String,
+  eventNotes: String,
+  eventStatus: String,
+  eventImageUrl: String,
+  eventStartDateTime: String,
+  eventEndDateTime: String,
+  eventStartLocalDate: String,
+  venue: Array,
+  minPrice: Double,
+  maxPrice: Double,
+  onsaleStartDateTime: String,
+  onsaleEndDateTime: String,
+}));
 
-// let getAllEventData = function() {
-//     let firstPage = JSON.parse(require(config.ticketMasterPaths.previousEventData));
-//     numPages = firstPage['page']['totalPages'];
-
-//     for (let index = 1; index < numPages; index++) {
-//         let eventEndpoint = "https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&apikey="+config.apiKey+"&startDateTime="+time+"Z&size=200"+"&page="+index;
-//         request(eventEndpoint, (error, response, body) => {
-//                 console.log(eventEndpoint);
-//                 if (error || response.statusCode !== 200) return console.log(`Error: ${error} - Status Code: ${response.statusCode}`);
-//                 fs.appendFile(config.ticketMasterPaths.previousEventData,JSON.stringify(body), (err) => {
-//                     if(err) throw err
-//                     console.log(`Page ${index} written to file`);
-//                 });
-//             });
-//     }
-// }
-
-let parseEventData = function() {
-    let eventData = require(config.ticketMasterPaths.previousEventData);
-    eventList = eventData['_embedded']
-    console.log(eventList);
-
+let downloadData = function(){
+  let eventsOnSale = 0;
+  got.stream(url).pipe(gunzip);
+  oboe(gunzip).node('events.*', event => {
+    let status = event.eventStatus;
+    if (status == "onsale")
+    {
+      // need to also check time here and do the insert.
+    }
+  });
 }
 
 
-// Grabs fresh event data
-// getPreviousEventData();
-// parseEventData();
-// setInterval(() => {
-//     getPreviousEventData();
-//     parseEventData();
-// },config.eventSearchTimer);
-
-//getEventData();
-
-var fs = require('fs');
-var readline = require('readline');
-var stream = require('stream');
-var express = require('express')
-
-var instream = fs.createReadStream('feed.json');
-var outstream = new stream;
-var rl = readline.createInterface(instream, outstream);
-
-rl.on('line', function(line) {
-  
-});
-
-rl.on('close', function() {
-  console.log(rl);
-});
+downloadData();
