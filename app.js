@@ -32,6 +32,6 @@ const parseData = require('./Ticket-Master-API/modules/parseData.js');
 
 // Run reparse and update the db at 12 every night
 schedule.scheduleJob('0 0 * * *', () => {
-    console.log("");
+    console.log("Streaming event data from file");
     downloadData();
 })
