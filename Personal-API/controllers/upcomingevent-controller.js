@@ -14,3 +14,12 @@ module.exports.getUpcomingEvents = function(req, res){
     });
 }
 
+module.exports.searchUpcomingEvents = function(req, res){
+    upcomingEvents.find({/*Add in the req.body.search query */}, (err, events) => {
+        if(err) return res.status(500).send("Unable to query your search");
+        res.json({
+            upcomingEvents: events
+        })
+    })
+}
+

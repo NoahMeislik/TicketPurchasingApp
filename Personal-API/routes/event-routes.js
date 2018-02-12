@@ -2,10 +2,11 @@ var express = require('express');
 var router = express.Router();
 var eventController = require('../controllers/upcomingevent-controller.js');
 
-//Post Routes
+// Get Routes
 router.get('/get-upcoming-events', eventController.getUpcomingEvents);
 
-//Get Routes
-//router.get('/get-user', userController.getUser);
+// Post Route
+router.post('/search-upcoming-events', eventController.searchUpcomingEvents);
+
 
 module.exports = router;
