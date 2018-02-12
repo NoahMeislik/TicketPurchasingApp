@@ -15,9 +15,12 @@ app.use(bodyParse.urlencoded({extended: true}));
 //--////////////////////--//
 //Routes
 var userRoutes = require(config.personalApiPaths.routes.userRoutes);
+var eventRoutes = require(config.personalApiPaths.routes.eventRoutes);
+
 
 // Use of the Route
 app.use('/user', userRoutes);
+app.use('/events', eventRoutes);
 
 // app.post('/thread',  )
 app.listen(config.port, function(){

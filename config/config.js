@@ -11,6 +11,7 @@ module.exports = {
             upcomingEvents : path.resolve('./Personal-API/models/upcomingEvents.js')
         },
         routes: {
+            eventRoutes : path.resolve('./Personal-API/routes/event-routes.js'),
             userRoutes : path.resolve('./Personal-API/routes/user-routes.js')
         }
     }

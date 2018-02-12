@@ -17,52 +17,50 @@ const Ticket = require(config.personalApiPaths.models.upcomingEvents);
 
 
 let downloadData = function(){
-  let eventsOnSale = 0;
   got.stream(url).pipe(gunzip);
   oboe(gunzip).node('events.*', event => {
-    
-    // If eventStartTime is before the current date (already happened) then we don't want to add that however if it is after the current date then we insert
-    let eventStartTime = moment(event.onsaleEndDateTime);
-    let eventStartTimeBefore = moment(event.onsaleEndDateTime, "YYYY-MM-DDTHH:mm:ssZ").subtract(1, 'days');
-    let eventSaleTime = event.onsaleStartDateTime;
+    // Check if the actual event has a onsaleStarDate
+    let onsaleStartDateTime = event.onsaleStartDateTime;
+    if (onsaleStartDateTime !== null) {
+      // Subtract one day from the onsalestartdatetime to see if it goes on sale within a day
+      onsaleStartDateTime = moment(onsaleStartDateTime, "YYYY-MM-DDTHH:mm:ssZ");
+      let difference = onsaleStartDateTime.diff(Date.now(),'days')
+      if (difference > 0)
+      {
+        if (event.eventStartDateTime) {
+          let ticketObject = {
+            eventId: event.eventId,
+            primaryEventUrl: event.primaryEventUrl,
+            resaleEventUrl: event.resaleEventUrl,
+            eventName: event.eventName,
+            eventNotes: event.eventNotes,
+            eventStatus: event.eventStatus,
+            eventImageUrl: event.eventImageUrl,
+            eventStartDateTime: event.eventStartDateTime,
+            eventEndDateTime: event.eventEndDateTime,
+            eventStartLocalDate: event.eventStartLocalDate,
+            venue: event.venue,
+            minPrice: event.minPrice,
+            maxPrice: event.maxPrice,
+            onsaleStartDateTime: event.onsaleStartDateTime,
+            onsaleEndDateTime: event.onsaleEndDateTime,
+          };
+          let ticket = new Ticket(ticketObject);
+          ticket.save(function(err){
 
-    console.log(event);
-    console.log(eventStartTime);
-    console.log(eventStartTime.diff(eventStartTimeBefore,'days'));
+              if(err){
+                  // TODO: Change this, I really cringe at the bad practice but oh well
+                  if(err.name == "BulkWriteError") return console.log("Duplicated data, skipping!");
+                  else return console.log(err.name);
+              }
 
-    
-    
-
-    // if (eventStartTime)
-    // {
-    //   let ticketObject = {
-    //     eventId: event.eventId,
-    //     primaryEventUrl: event.primaryEventUrl,
-    //     resaleEventUrl: event.resaleEventUrl,
-    //     eventName: event.eventName,
-    //     eventNotes: event.eventNotes,
-    //     eventStatus: event.eventStatus,
-    //     eventImageUrl: event.eventImageUrl,
-    //     eventStartDateTime: event.eventStartDateTime,
-    //     eventEndDateTime: event.eventEndDateTime,
-    //     eventStartLocalDate: event.eventStartLocalDate,
-    //     venue: event.venue,
-    //     minPrice: event.minPrice,
-    //     maxPrice: event.maxPrice,
-    //     onsaleStartDateTime: event.onsaleStartDateTime,
-    //     onsaleEndDateTime: event.onsaleEndDateTime,
-    //   };
-    //   let ticket = new Ticket(ticketObject);
-    //   ticket.save(function(err){
-    //       if(err){
-    //           return console.log(err);
-    //       }
-
-    //       return console.log("Inserted");
-    //   })
-    // }
+              console.log(`Adding new event to the datbase with ID: ${event.eventId}`);
+          });
+        }
+      }
+    }
   });
 }
 
 
-downloadData();
+// downloadData();
