@@ -28,6 +28,7 @@ let downloadData = function(){
       if (difference > 0)
       {
         if (event.eventStartDateTime) {
+
           let ticketObject = {
             eventId: event.eventId,
             primaryEventUrl: event.primaryEventUrl,
@@ -45,6 +46,7 @@ let downloadData = function(){
             onsaleStartDateTime: event.onsaleStartDateTime,
             onsaleEndDateTime: event.onsaleEndDateTime,
           };
+
           let ticket = new Ticket(ticketObject);
           ticket.save(function(err){
 
@@ -53,8 +55,8 @@ let downloadData = function(){
                   if(err.name == "BulkWriteError") return console.log("Duplicated data, skipping!");
                   else return console.log(err.name);
               }
-
               console.log(`Adding new event to the datbase with ID: ${event.eventId}`);
+              
           });
         }
       }
@@ -63,4 +65,3 @@ let downloadData = function(){
 }
 
 
-// downloadData();

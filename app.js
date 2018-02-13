@@ -16,13 +16,15 @@ app.use(bodyParse.urlencoded({extended: true}));
 //Routes
 var userRoutes = require(config.personalApiPaths.routes.userRoutes);
 var eventRoutes = require(config.personalApiPaths.routes.eventRoutes);
-
+var popularArtists = require(config.personalApiPaths.routes.popularArtists);
 
 // Use of the Route
 app.use('/user', userRoutes);
 app.use('/events', eventRoutes);
+app.use('/artists', popularArtists);
 
-// app.post('/thread',  )
+
+
 app.listen(config.port, function(){
     console.log("Server Running on Port: 3000")
 })

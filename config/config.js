@@ -8,11 +8,13 @@ module.exports = {
     personalApiPaths : {
         models: {
             user : path.resolve('./Personal-API/models/user.js'),
-            upcomingEvents : path.resolve('./Personal-API/models/upcomingEvents.js')
+            upcomingEvents : path.resolve('./Personal-API/models/upcomingEvents.js'),
+            popularArtists : path.resolve('./Personal-API/models/popularArtists.js')
         },
         routes: {
             eventRoutes : path.resolve('./Personal-API/routes/event-routes.js'),
-            userRoutes : path.resolve('./Personal-API/routes/user-routes.js')
+            userRoutes : path.resolve('./Personal-API/routes/user-routes.js'),
+            popularArtists : path.resolve('./Personal-API/routes/artists-routes.js'),
         }
     }
 }

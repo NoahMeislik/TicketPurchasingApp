@@ -5,7 +5,6 @@ var eventController = require('../controllers/upcomingevent-controller.js');
 // Get Routes
 router.get('/get-upcoming-events', eventController.getUpcomingEvents);
 
-// Post Route
 router.post('/search-upcoming-events', eventController.searchUpcomingEvents);
 
 
