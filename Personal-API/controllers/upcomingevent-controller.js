@@ -15,7 +15,11 @@ module.exports.getUpcomingEvents = function(req, res){
 }
 
 module.exports.searchUpcomingEvents = function(req, res){
-    upcomingEvents.find({/*Add in the req.body.search query */}, (err, events) => {
+    if (!req.body.search) return res.status(400).send("You did not provide search parameters")
+    upcomingEvents.find(
+        {'upcomingEvents' : [
+            {$search: req.body.search}
+        ]}, (err, events) => {
         if(err) return res.status(500).send("Unable to query your search");
         res.json({
             upcomingEvents: events
