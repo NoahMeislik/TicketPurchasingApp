@@ -14,6 +14,11 @@ module.exports = mongoose.model('upcomingEvent', {
     venue: {type: "Array", required: true},
     minPrice: {type: "Number", required: false},
     maxPrice: {type: "Number", required: false},
+    category1: {type: "String", required: false},
+    category2: {type: "String", required: false},
+    category3: {type: "String", required: false},
+    queryParameter: {type: "String", required: false},
+    presales: {type: "Array", required: true},
     onsaleStartDateTime: {type: "String", required: true},
     onsaleEndDateTime: {type: "String", required: true},
 });

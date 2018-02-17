@@ -21,14 +21,13 @@ let downloadData = function(){
   oboe(gunzip).node('events.*', event => {
     // Check if the actual event has a onsaleStarDate
     let onsaleStartDateTime = event.onsaleStartDateTime;
-    if (onsaleStartDateTime !== null) {
+    if (onsaleStartDateTime !== null || event.eventStatus == "presale") {
       // Subtract one day from the onsalestartdatetime to see if it goes on sale within a day
       onsaleStartDateTime = moment(onsaleStartDateTime, "YYYY-MM-DDTHH:mm:ssZ");
       let difference = onsaleStartDateTime.diff(Date.now(),'days')
-      if (difference > 0)
+      if (difference > config.ticketMasterApi.dateDifference || event.eventStatus == "presale")
       {
-        if (event.eventStartDateTime) {
-
+        if (event.eventStartDateTime || event.eventStatus == "presale") {
           let ticketObject = {
             eventId: event.eventId,
             primaryEventUrl: event.primaryEventUrl,
@@ -43,13 +42,17 @@ let downloadData = function(){
             venue: event.venue,
             minPrice: event.minPrice,
             maxPrice: event.maxPrice,
+            category1: event.classificationSegment,
+            category2: event.classificationGenre,
+            category3: event.classificationSubGenre,
+            queryParameter: event.eventNotes + " - " + event.eventName,
+            presale: event.presales,
             onsaleStartDateTime: event.onsaleStartDateTime,
             onsaleEndDateTime: event.onsaleEndDateTime,
           };
 
           let ticket = new Ticket(ticketObject);
           ticket.save(function(err){
-
               if(err){
                   // TODO: Change this, I really cringe at the bad practice but oh well
                   if(err.name == "BulkWriteError") return console.log("Duplicated data, skipping!");

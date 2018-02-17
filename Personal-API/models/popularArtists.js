@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 
-module.exports = mongoose.model('popularartists', {
-    artistName: {type: "String", required: true},
-    popularity: {type: "Number", required: false},
+module.exports = mongoose.model('artists', {
+    id: {type: "String", required: true, unique: true},
+    name: {type: "String", required: true},
+    followers: {type: "String", required: true},
+    popularity: {type: "Number", required: true},
 });
