@@ -10,6 +10,7 @@ module.exports = {
             user : path.resolve('./Personal-API/models/user.js'),
             upcomingEvents : path.resolve('./Personal-API/models/upcomingEvents.js'),
             artists : path.resolve('./Personal-API/models/popularArtists.js'),
+            popularEvents : path.resolve('./Personal-API/models/popularEvents.js'),
             queuedEvents : path.resolve('./Personal-API/models/queuedEvents.js')
         },
         routes: {
