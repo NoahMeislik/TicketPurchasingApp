@@ -11,7 +11,7 @@
             controller: 'homeCtrl'
         })
 
-        // $httpProvider.interceptors.push('interceptorFactory');
+        $httpProvider.interceptors.push('interceptorFactory');
 
 
 

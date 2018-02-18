@@ -1,164 +1,165 @@
 <div id="wrapper">
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="index.html">Ticket Price Dashboard</a>
-        </div>
-        <!-- /.navbar-header -->
-    </nav>
-
-    <div id="page-wrapper">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Dashboard</h1>
+    <div ng-show="userLoggedIn">
+    
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Ticket Price Dashboard</a>
             </div>
-            <!-- /.col-lg-12 -->
-        </div>
-        <!-- /.row -->
-        <div class="row">
-           
-          
-           
-            <div class="col-lg-3 col-md-6">
-                <div class="panel panel-red">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <i class="fa fa-support fa-5x"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <div class="huge">13</div>
-                                <div>Support Tickets!</div>
+            <!-- /.navbar-header -->
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Dashboard</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+            
+            
+            
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-support fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">13</div>
+                                    <div>Support Tickets!</div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- /.row -->
-        <div class="row">
-            <div class="col-lg-12">
-                <!-- /.panel -->
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Dashboard
-                        <div class="pull-right">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                    Data selection
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu pull-right" role="menu">
-                                    <li>
-                                        <a href="#">Action</a>
-                                    </li>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- /.panel -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Dashboard
+                            <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                        Data selection
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li>
+                                            <a href="#">Action</a>
+                                        </li>
 
-                                    <li>
-                                        <a href="#">Action</a>
-                                    </li>
+                                        <li>
+                                            <a href="#">Action</a>
+                                        </li>
 
-                                    <li>
-                                        <a href="#">Action</a>
-                                    </li>
+                                        <li>
+                                            <a href="#">Action</a>
+                                        </li>
 
-                                </ul>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- /.panel-heading -->
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-header" id="headingTwo">
-                                            <h5 class="mb-0">
-                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#artists" aria-expanded="false" aria-controls="collapseTwo">
-                                                Popular artists
-                                            </button>
-                                            </h5>
-                                        </div>
-                                        <div id="artists" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                                            <div class="card-body">
-                                                    <table id="artists" class="table table-bordered table-hover table-striped">  
-                                                            <thead>  
-                                                                <tr>  
-                                                                    <th>Name</th>  
-                                                                    <th>Popularity</th>  
-                                                                    <th>Followers</th>  
-                                                                </tr>  
-                                                            </thead>  
-                                                            <tbody>  
-                                                                <tr ng-repeat="artist in artists | orderBy:'popularity':true">  
-                                                                    <td>{{artist.name}}</td>  
-                                                                    <td>{{artist.popularity}}</td>  
-                                                                    <td>{{artist.followers}}</td>  
-                                                                </tr>  
-                                                            </tbody>  
-                                                        </table>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-header" id="headingTwo">
+                                                <h5 class="mb-0">
+                                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#artists" aria-expanded="false" aria-controls="collapseTwo">
+                                                    Popular artists
+                                                </button>
+                                                </h5>
+                                            </div>
+                                            <div id="artists" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                                                <div class="card-body">
+                                                        <table id="artists" class="table table-bordered table-hover table-striped">  
+                                                                <thead>  
+                                                                    <tr>  
+                                                                        <th>Name</th>  
+                                                                        <th>Popularity</th>  
+                                                                        <th>Followers</th>  
+                                                                    </tr>  
+                                                                </thead>  
+                                                                <tbody>  
+                                                                    <tr ng-repeat="artist in artists | orderBy:'popularity':true">  
+                                                                        <td>{{artist.name}}</td>  
+                                                                        <td>{{artist.popularity}}</td>  
+                                                                        <td>{{artist.followers}}</td>  
+                                                                    </tr>  
+                                                                </tbody>  
+                                                            </table>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="card">
-                                        <div class="card-header" id="headingTwo">
-                                            <h5 class="mb-0">
-                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#popularevents" aria-expanded="false" aria-controls="collapseTwo">
-                                                Popular events
-                                            </button>
-                                            </h5>
-                                        </div>
-                                        <div id="popularevents" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                                            <div class="card-body">
-                                                    <table id="artists" class="table table-bordered table-hover table-striped">  
-                                                            <thead>  
-                                                                <tr> 
-                                                                    <th>Event ID</th>  
-                                                                    <th>Artist Name</th>  
-                                                                    <th>Event Name</th>
-                                                                    <th>Start Date</th>
-                                                                    <th>On sale start date</th>
-                                                                    <th>Link</th>
-                                                                    <th>Queue for purchase</th>
-                                                                </tr>  
-                                                            </thead>  
-                                                            <tbody>  
-                                                                <tr ng-repeat="event in popularEvents | orderBy:'onsaleStartDateTime':true">  
-                                                                    <td>{{event.eventId}}</td>  
-                                                                    <td>{{event.eventArtist}}</td>  
-                                                                    <td>{{event.eventName}}</td> 
-                                                                    <td>{{event.eventStartDateTime}}</td>  
-                                                                    <td>{{event.onsaleStartDateTime}}</td>
-                                                                    <td><a ng-href="{{event.eventInfo.primaryEventUrl}}" target="_blank">Link</a></td>
-                                                                    <td><a class="purchase" ng-click="queueForPurchase(event.eventId)"><i class="glyphicon glyphicon-shopping-cart"></i></a></td>                                                                    </td>  
-                                                                </tr>  
-                                                            </tbody>  
-                                                        </table>
+                                        <div class="card">
+                                            <div class="card-header" id="headingTwo">
+                                                <h5 class="mb-0">
+                                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#popularevents" aria-expanded="false" aria-controls="collapseTwo">
+                                                    Popular events
+                                                </button>
+                                                </h5>
+                                            </div>
+                                            <div id="popularevents" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                                                <div class="card-body">
+                                                        <table id="artists" class="table table-bordered table-hover table-striped">  
+                                                                <thead>  
+                                                                    <tr> 
+                                                                        <th>Event ID</th>  
+                                                                        <th>Artist Name</th>  
+                                                                        <th>Event Name</th>
+                                                                        <th>Start Date</th>
+                                                                        <th>On sale start date</th>
+                                                                        <th>Link</th>
+                                                                        <th>Queue for purchase</th>
+                                                                    </tr>  
+                                                                </thead>  
+                                                                <tbody>  
+                                                                    <tr ng-repeat="event in popularEvents | orderBy:'onsaleStartDateTime':true">  
+                                                                        <td>{{event.eventId}}</td>  
+                                                                        <td>{{event.eventArtist}}</td>  
+                                                                        <td>{{event.eventName}}</td> 
+                                                                        <td>{{event.eventStartDateTime}}</td>  
+                                                                        <td>{{event.onsaleStartDateTime}}</td>
+                                                                        <td><a ng-href="{{event.eventInfo.primaryEventUrl}}" target="_blank">Link</a></td>
+                                                                        <td><a class="purchase" ng-click="queueForPurchase(event.eventId)"><i class="glyphicon glyphicon-shopping-cart"></i></a></td>                                                                    </td>  
+                                                                    </tr>  
+                                                                </tbody>  
+                                                            </table>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                <!-- /.table-responsive -->
+                                    <!-- /.table-responsive -->
+                                </div>
+
                             </div>
-
+                            <!-- /.row -->
                         </div>
-                        <!-- /.row -->
+                        <!-- /.panel-body -->
                     </div>
-                    <!-- /.panel-body -->
+
+                    <!-- /.panel -->
                 </div>
 
-                <!-- /.panel -->
             </div>
-
+            <!-- /.row -->
         </div>
-        <!-- /.row -->
+        <!-- /#page-wrapper -->
     </div>
-    <!-- /#page-wrapper -->
-
 </div>

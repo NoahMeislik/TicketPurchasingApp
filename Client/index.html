@@ -15,8 +15,10 @@
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <body>
+        <user-section></user-section>
         <div ui-view></div>
     </body>
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.js"></script>
 
@@ -44,6 +46,15 @@
     <script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
     <script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
     
+    <!-- Factories -->
+    <script src="/shared/factories/interceptor.js"></script>
 
+
+
+    <!-- Services -->
+    <script src="/shared/services/user-service.js"></script>
+
+    <!-- Directives -->
+    <script src="/shared/directives/user-section/user-section-directive.js"></script>
 
 </html>

@@ -54,13 +54,11 @@ module.exports.loginUser = function(req, res){
        loggedUser.password = undefined;
        loggedUser.email = undefined;
 
-       var token = jwt.sign(loggedUser.toJSON(), config.APP_SECRET, {expiresIn: 60 * 60 * 24 * 1000});
+       var token = jwt.sign(loggedUser.toJSON(), process.env.APP_SECRET, {expiresIn: 60 * 60 * 24 * 1000});
 
        res.json({
            user: loggedUser,
            token: token
        })
    })
-
-
 }

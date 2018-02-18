@@ -1,0 +1,28 @@
+<div>
+    <div ng-show="isLoggedIn"> 
+        <strong> Welcome! </strong> 
+        <div>
+            <button ng-click="logUserOut()">Logout</button>
+
+        </div>
+    </div>
+    <div ng-show="!isLoggedIn">
+        <div ng-show="formState === 'login' ">
+            <form name="loginForm" ng-submit="logUserIn(loginForm.$valid)">
+                <input type="text" 
+                       ng-model="loginUser.login" 
+                       placeholder="Username or Email"
+                       required/>
+                <input type="password"
+                       ng-model="loginUser.password"
+                       placeholder="password"
+                       required/>
+
+                <button type="submit"> Login</button>
+                <p style="color: red; font-size: 14px;" ng-if="error">
+                    {{error}}
+                </p>
+            </form>
+        </div>
+    </div>
+</div>

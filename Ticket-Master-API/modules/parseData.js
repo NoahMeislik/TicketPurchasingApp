@@ -153,4 +153,3 @@ let init = function(){
   downloadData();
   getPopularEvents();
 }
-getPopularEvents();

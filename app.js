@@ -10,6 +10,8 @@ app.use('/', express.static(__dirname + '/client'));
 app.use(bodyParse.json());
 app.use(bodyParse.urlencoded({extended: true}));
 
+process.env.APP_SECRET = config.appSecret;
+
 
 //--/////////////////////--//
 //--    Personal API    --//

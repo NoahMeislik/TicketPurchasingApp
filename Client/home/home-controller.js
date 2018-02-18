@@ -1,11 +1,12 @@
 (function(window, angular){
     angular.module('ticketPriceInterpreter')
-    .controller('homeCtrl', ['$scope', '$http', '$state', '$window', function($scope, $http, $state, $window){
+    .controller('homeCtrl', ['$scope', '$http', '$state', '$window', 'userSvc', function($scope, $http, $state, $window, userSvc){
         $scope.artists =[]
         $scope.popularEvents = []
         $scope.preSales = []
         $scope.queuedEvent = {}
 
+        $scope.userLoggedIn = userSvc.isLoggedIn;
 
         function getArtists(){
             $http.get('/artists/get-popular-artists').then(function(response){
@@ -28,7 +29,7 @@
             $scope.queuedEvent.eventID = eventID
             $http.post('/events/queue-event/', $scope.queuedEvent).then(function(response){
                 console.log('sent to queue')
-                init().then(window.location.reload());
+                init()
             }, function(err){
                 console.log(err)
             })
