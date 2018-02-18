@@ -5,6 +5,7 @@ module.exports = {
     createUserToken : "This is a meme and a half!",
     appSecret : "This is also a meme and a half!",
     port: 3000,
+
     personalApiPaths : {
         models: {
             user : path.resolve('./Personal-API/models/user.js'),
@@ -20,14 +21,18 @@ module.exports = {
         }
     },
     ticketMasterApi:{
-        dateDifference: -4
+        dateDifference: -4, // 4 days before
+        modules: {
+            parseData: path.resolve('./Ticket-Master-API/modules/parseData.js'),
+            getPopularEvents: path.resolve('./Ticket-Master-API/modules/getPopularEvents.js')
+        }
     },
     spotifyApi: {
         popularityLimit: 80,
         followerLimit: 150000,
         maxPage: 100000,
         modules: {
-            getArtists: path.resolve('./Spotify-API/modules/getArtists.js')
+            getArtists: path.resolve('./Spotify-API/modules/getArtists.js'),
         }
     }
 }

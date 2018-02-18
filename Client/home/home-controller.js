@@ -44,9 +44,14 @@
             $http.post('/events/queue-event/', $scope.queuedEvent).then(function(response){
                 console.log('sent to queue')
                 init()
+                $state.reload();
             }, function(err){
                 console.log(err)
             })
+        }
+
+        $scope.goToEvent = function(eventId) {
+            $state.go('event', {eventID: eventId})
         }
 
         function init(){

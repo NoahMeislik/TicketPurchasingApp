@@ -2,19 +2,6 @@
     <div ng-show="userLoggedIn">
     
         <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">Ticket Price Dashboard</a>
-            </div>
-            <!-- /.navbar-header -->
-        </nav>
-
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
@@ -25,11 +12,8 @@
             <!-- /.row -->
             <div class="row">
             
-            
-            
-
                 <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-red">
+                    <div class="panel panel-green" style="cursor:pointer;"  data-toggle="collapse" data-target="#artists" >
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
@@ -47,11 +31,11 @@
 
                 
                 <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-green">
+                    <div class="panel panel-green" style="cursor:pointer;" data-toggle="collapse" data-target="#popularevents">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa fa-music fa-5x"></i>
+                                    <i class="fa fa fa-fire fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge">{{totalEvents}}</div>
@@ -64,20 +48,21 @@
 
 
                 <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-green">
+                    <div class="panel panel-green" style="cursor:pointer;" data-toggle="collapse" data-target="#qEvents">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa fa-fire fa-5x"></i>
+                                    <i class="fa fa fa-shopping-cart fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge">{{totalQueuedEvents}}</div>
-                                    <div>Popular Events</div>
+                                    <div>Queued For Purchase Events</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                
 
             </div>
             <!-- /.row -->
@@ -88,7 +73,6 @@
                         <div class="panel-heading">
                             Dashboard
                             <div class="pull-right">
-
                             </div>
                         </div>
                         <!-- /.panel-heading -->
@@ -96,13 +80,6 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                         <div class="card">
-                                            <div class="card-header" id="headingTwo">
-                                                <h5 class="mb-0">
-                                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#artists" aria-expanded="false" aria-controls="collapseTwo">
-                                                    Popular artists
-                                                </button>
-                                                </h5>
-                                            </div>
                                             <div id="artists" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                                                 <div class="card-body">
                                                         <table id="artists" class="table table-bordered table-hover table-striped">  
@@ -126,16 +103,9 @@
                                         </div>
 
                                         <div class="card">
-                                            <div class="card-header" id="headingTwo">
-                                                <h5 class="mb-0">
-                                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#popularevents" aria-expanded="false" aria-controls="collapseTwo">
-                                                    Popular events
-                                                </button>
-                                                </h5>
-                                            </div>
                                             <div id="popularevents" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                                                 <div class="card-body">
-                                                        <table id="artists" class="table table-bordered table-hover table-striped">  
+                                                        <table id="events" class="table table-bordered table-hover table-striped">  
                                                                 <thead>  
                                                                     <tr> 
                                                                         <th>Event ID</th>  
@@ -150,7 +120,7 @@
                                                                     </tr>  
                                                                 </thead>  
                                                                 <tbody>  
-                                                                    <tr ng-repeat="event in popularEvents | orderBy:'onsaleStartDateTime':true">  
+                                                                    <tr class="event" ng-repeat="event in popularEvents | orderBy:'onsaleStartDateTime':true" >  
                                                                         <td>{{event.eventId}}</td>  
                                                                         <td>{{event.eventName}}</td> 
                                                                         <td>{{event.eventArtist}}</td>
@@ -159,13 +129,51 @@
                                                                         <td>{{event.minPrice}}</td>  
                                                                         <td>{{event.maxPrice}}</td>
                                                                         <td><a ng-href="{{event.primaryEventUrl}}" target="_blank">Link</a></td>
-                                                                        <td><a class="purchase" ng-click="queueForPurchase(event.eventId)"><i class="glyphicon glyphicon-shopping-cart"></i></a></td>                                                                    </td>  
+                                                                        <td data-eventid="{{event.eventId}}"><a class="purchase" style="cursor:pointer;" ng-click="queueForPurchase(event.eventId)"><i class="glyphicon glyphicon-shopping-cart"></i></a></td>  
                                                                     </tr>  
                                                                 </tbody>  
                                                             </table>
                                                 </div>
                                             </div>
                                         </div>
+
+
+                                        <div class="card">
+                                                <div id="qEvents" class="collapse" >
+                                                    <div class="card-body">
+                                                            <table id="queuedevents" class="table table-bordered table-hover table-striped">  
+                                                                    <thead>  
+                                                                        <tr> 
+                                                                            <th>Event ID</th>  
+                                                                            <th>Event Name</th>
+                                                                            <th>Event Artist</th>
+                                                                            <th>Start Date</th>
+                                                                            <th>On sale start date</th>
+                                                                            <th>Min price ($)</th>
+                                                                            <th>Max price ($)</th>
+                                                                            <th>Ticket master Link</th>
+                                                                            <th>View ticket sales</th>
+                                                                            <th>Seat Map Link</th>
+                                                                        </tr>  
+                                                                    </thead>  
+                                                                    <tbody>  
+                                                                        <tr class="event" ng-repeat="event in queuedEvents | orderBy:'onsaleStartDateTime':true" >  
+                                                                            <td>{{event.eventId}}</td>  
+                                                                            <td>{{event.eventName}}</td> 
+                                                                            <td>{{event.eventArtist}}</td>
+                                                                            <td>{{event.eventStartDateTime}}</td>  
+                                                                            <td>{{event.onsaleStartDateTime}}</td>
+                                                                            <td>{{event.minPrice}}</td>  
+                                                                            <td>{{event.maxPrice}}</td>
+                                                                            <td><a ng-href="{{event.primaryEventUrl}}" target="_blank">Link</a></td>
+                                                                            <td><a ng-click="goToEvent(event.eventId)" target="_blank">Link</a></td>
+                                                                            <td><a ng-href="{{event.seatMap}}" target="_blank">Link</a></td>
+                                                                        </tr>  
+                                                                    </tbody>  
+                                                                </table>
+                                                    </div>
+                                                </div>
+                                            </div>
 
                                     <!-- /.table-responsive -->
                                 </div>

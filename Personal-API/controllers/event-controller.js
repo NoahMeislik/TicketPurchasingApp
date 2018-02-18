@@ -38,7 +38,9 @@ module.exports.getQueuedEvents = function(req, res){
 module.exports.queueEvent = function(req, res){
     PopularEvents.findOne({ "eventId" : req.body.eventID}, (err, event) => {
         if(err) return res.status(500).send("Unable to query upcoming events at this time");
+        console.log(event);
         let eventToQueue = {
+            eventArtist: event.eventArtist,
             eventId: event.eventId,
             primaryEventUrl: event.primaryEventUrl,
             resaleEventUrl: event.resaleEventUrl,
@@ -56,12 +58,14 @@ module.exports.queueEvent = function(req, res){
             category2: event.classificationGenre,
             category3: event.classificationSubGenre,
             queryParameter: event.eventNotes + " - " + event.eventName,
-            presale: event.presales,
+            sales: event.sales,
+            seatMap: event.seatMap,
             onsaleStartDateTime: event.onsaleStartDateTime,
             onsaleEndDateTime: event.onsaleEndDateTime,
-        }
+        };
+        console.log(eventToQueue);
+
         let queuedEvent = new QueuedEvent(eventToQueue);
-        console.log(queuedEvent)
         queuedEvent.save(function(err){
             if(err){
                 // TODO: Change this, I really cringe at the bad practice but oh well
@@ -73,7 +77,8 @@ module.exports.queueEvent = function(req, res){
                 if(err){
                     console.log("Error removing queued event from popular events")
                 }
-                console.log("Removed queued event from popular event")
+                console.log("Removed queued event from popular event");
+                res.status(200).send("Queued event");
             })
         });
     });

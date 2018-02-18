@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
 module.exports = mongoose.model('queuedEvents', {
+    eventArtist: {type: "String", required: true},
     eventId: {type: "String", required: true, unique: true},
     primaryEventUrl: {type: "String", required: true},
     resaleEventUrl: {type: "String", required: false},
@@ -14,7 +15,9 @@ module.exports = mongoose.model('queuedEvents', {
     venue: {type: "Array", required: true},
     minPrice: {type: "Number", required: false},
     maxPrice: {type: "Number", required: false},
-    presales: {type: "Array", required: true},
+    queryParameter: {type: "String", required: false},
+    seatMap: {type: "String", required: false},
+    sales: {type: "Array", required: true},
     onsaleStartDateTime: {type: "String", required: true},
     onsaleEndDateTime: {type: "String", required: true},
 });

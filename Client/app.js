@@ -10,6 +10,11 @@
             templateUrl: '/home/home.html',
             controller: 'homeCtrl'
         })
+        .state('event', {
+            url: '/event/:eventID',
+            templateUrl: '/event/event.html',
+            controller: 'eventCtrl'
+        })
 
         $httpProvider.interceptors.push('interceptorFactory');
 

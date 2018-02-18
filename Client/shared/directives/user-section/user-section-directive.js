@@ -10,6 +10,7 @@
                 scope.loginUser = {};
                 scope.signupUser = {};
                 scope.formState = 'login';
+                scope.user = userSvc.user.username;
 
                 scope.changeFormState = function(state){
                     scope.formState = state;

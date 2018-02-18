@@ -19,7 +19,8 @@ module.exports = mongoose.model('popularEvent', {
     category2: {type: "String", required: false},
     category3: {type: "String", required: false},
     queryParameter: {type: "String", required: false},
-    presales: {type: "Array", required: true},
+    seatMap: {type: "String", required: true},
+    sales: {type: "Array", required: true},
     onsaleStartDateTime: {type: "String", required: true},
     onsaleEndDateTime: {type: "String", required: true},
 });
