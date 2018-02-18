@@ -35,22 +35,19 @@ app.listen(config.port, function(){
 //--/////////////////////--//
 //--    TicketMasterAPI    --//
 //--////////////////////--//
-const parseModule = require('./Ticket-Master-API/modules/parseData.js');
-
 
 // Run reparse and update the db at 12 every night
 schedule.scheduleJob('0 0 * * *', () => {
     console.log("Streaming event data from file");
-    init();
+    let parseModule = require('./Ticket-Master-API/modules/parseData.js');
 })
 
 
 //--/////////////////////--//
 //--    SpotifyAPI      --//
 //--////////////////////--//
-const spotifyModule = require(config.spotifyApi.modules.getArtists);
 
 schedule.scheduleJob('0 0 * * 0', () => {
     console.log("Getting new artists on spotify");
-    init();
+    let spotifyModule = require(config.spotifyApi.modules.getArtists);
 })

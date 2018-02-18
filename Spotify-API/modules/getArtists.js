@@ -24,7 +24,7 @@ var clientId = 'c3bab349867a444997e28f81bbb66862',
 
 // Retrieve an access token.
 
-let init = function(){
+let initSpotify = function(){
   spotify.clientCredentialsGrant()
   .then(function(data) {
     console.log('The access token expires in ' + data.body['expires_in']);
@@ -85,3 +85,4 @@ let fetchArtists = function() {
   }
 }
 
+initSpotify();

@@ -149,7 +149,9 @@ let getPopularEvents = function() {
         });
             };
 
-let init = function(){
+let initTMA = function(){
   downloadData();
   getPopularEvents();
 }
+
+initTMA();
