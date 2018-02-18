@@ -21,7 +21,7 @@ module.exports = {
         }
     },
     ticketMasterApi:{
-        dateDifference: 5, // 4 days before
+        dateDifference: -4, // 4 days before
         modules: {
             parseData: path.resolve('./Ticket-Master-API/modules/parseData.js'),
             getPopularEvents: path.resolve('./Ticket-Master-API/modules/getPopularEvents.js')

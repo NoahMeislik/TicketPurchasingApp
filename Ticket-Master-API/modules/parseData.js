@@ -24,7 +24,6 @@ const queuedEvents = require(config.personalApiPaths.models.queuedEvents);
 
 let downloadData = function() {
     got.stream(url).pipe(gunzip);
-    console.log('Starting to stream')
     oboe(gunzip).node('events.*', event => {
         // Check if the actual event has a onsaleStarDate
         let onsaleStartDateTime = event.onsaleStartDateTime;
@@ -64,7 +63,7 @@ let downloadData = function() {
                                 return console.log(err.name);
                             }
                         }
-                        // console.log(`Adding new event to the datbase with ID: ${event.eventId}`);
+                        console.log(`Adding new event to the datbase with ID: ${event.eventId}`);
                     });
                 }
             }
