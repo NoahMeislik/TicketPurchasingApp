@@ -36,6 +36,8 @@ let getPopularEvents = function() {
                     return console.log(err);
                 }
 
+
+
                 if (popularEvent !== null) {
                   if (popularEvent.category1 == "Music") {
                       queuedEvents.find({ "eventId" : popularEvent.eventId}, (err, event) => {
@@ -43,6 +45,7 @@ let getPopularEvents = function() {
                          
                         let eventDataURL = `https://app.ticketmaster.com/discovery/v2/events/${popularEvent.eventId}.json?apikey=${config.apiKey}`; 
                         request(eventDataURL, (error,response,body)=>{
+                            
                             if (error) return console.log(error);
                             let parsed = JSON.parse(body);
                             let seatmapData = "N/A";
@@ -94,6 +97,10 @@ let getPopularEvents = function() {
                     }
                       });
                   }
+                }
+                else 
+                {
+                    console.log(`Found no events for artist ${artists[i].name}`);
                 }
               }
             );
