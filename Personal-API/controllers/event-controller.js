@@ -83,3 +83,18 @@ module.exports.queueEvent = function(req, res){
         });
     });
 }
+
+module.exports.getEventById = function(req, res){
+    if(!req.query.eventId){
+        return res.status(400).send("Specify an event Id please");
+    }
+    PopularEvents.findOne({eventId:req.query.eventId}, function(err, event){
+        if(err){
+            return res.status(500).send("Unable to query event data at this time")
+        }
+
+        res.json({
+            event: event
+        })
+    })
+}

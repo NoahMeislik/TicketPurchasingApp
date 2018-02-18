@@ -116,6 +116,7 @@
                                                                         <th>Min price ($)</th>
                                                                         <th>Max price ($)</th>
                                                                         <th>Link</th>
+                                                                        <th>View ticket sales</th>
                                                                         <th>Queue for purchase</th>
                                                                     </tr>  
                                                                 </thead>  
@@ -129,6 +130,7 @@
                                                                         <td>{{event.minPrice}}</td>  
                                                                         <td>{{event.maxPrice}}</td>
                                                                         <td><a ng-href="{{event.primaryEventUrl}}" target="_blank">Link</a></td>
+                                                                        <td><a ng-click="goToEvent(event.eventId)" target="_blank">Link</a></td>
                                                                         <td data-eventid="{{event.eventId}}"><a class="purchase" style="cursor:pointer;" ng-click="queueForPurchase(event.eventId)"><i class="glyphicon glyphicon-shopping-cart"></i></a></td>  
                                                                     </tr>  
                                                                 </tbody>  
@@ -152,7 +154,6 @@
                                                                             <th>Min price ($)</th>
                                                                             <th>Max price ($)</th>
                                                                             <th>Ticket master Link</th>
-                                                                            <th>View ticket sales</th>
                                                                             <th>Seat Map Link</th>
                                                                         </tr>  
                                                                     </thead>  
@@ -166,7 +167,6 @@
                                                                             <td>{{event.minPrice}}</td>  
                                                                             <td>{{event.maxPrice}}</td>
                                                                             <td><a ng-href="{{event.primaryEventUrl}}" target="_blank">Link</a></td>
-                                                                            <td><a ng-click="goToEvent(event.eventId)" target="_blank">Link</a></td>
                                                                             <td><a ng-href="{{event.seatMap}}" target="_blank">Link</a></td>
                                                                         </tr>  
                                                                     </tbody>  
