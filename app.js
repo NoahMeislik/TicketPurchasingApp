@@ -42,6 +42,7 @@ schedule.scheduleJob('0 0 * * *', () => {
     let parseModule = require('./Ticket-Master-API/modules/parseData.js');
 })
 
+let parseModule = require('./Ticket-Master-API/modules/parseData.js');
 
 //--/////////////////////--//
 //--    SpotifyAPI      --//

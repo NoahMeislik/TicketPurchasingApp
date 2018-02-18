@@ -27,21 +27,58 @@
             
             
             
+
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-red">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-support fa-5x"></i>
+                                    <i class="fa fa-calendar fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">13</div>
-                                    <div>Support Tickets!</div>
+                                    <div class="huge">{{totalArtists}}</div>
+                                    <div>Total Artists</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
+                
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa fa-music fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">{{totalEvents}}</div>
+                                    <div>Popular Events</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa fa-fire fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">{{totalQueuedEvents}}</div>
+                                    <div>Popular Events</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <!-- /.row -->
             <div class="row">
@@ -51,26 +88,7 @@
                         <div class="panel-heading">
                             Dashboard
                             <div class="pull-right">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                        Data selection
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu pull-right" role="menu">
-                                        <li>
-                                            <a href="#">Action</a>
-                                        </li>
 
-                                        <li>
-                                            <a href="#">Action</a>
-                                        </li>
-
-                                        <li>
-                                            <a href="#">Action</a>
-                                        </li>
-
-                                    </ul>
-                                </div>
                             </div>
                         </div>
                         <!-- /.panel-heading -->
@@ -121,10 +139,12 @@
                                                                 <thead>  
                                                                     <tr> 
                                                                         <th>Event ID</th>  
-                                                                        <th>Artist Name</th>  
                                                                         <th>Event Name</th>
+                                                                        <th>Event Artist</th>
                                                                         <th>Start Date</th>
                                                                         <th>On sale start date</th>
+                                                                        <th>Min price ($)</th>
+                                                                        <th>Max price ($)</th>
                                                                         <th>Link</th>
                                                                         <th>Queue for purchase</th>
                                                                     </tr>  
@@ -132,11 +152,13 @@
                                                                 <tbody>  
                                                                     <tr ng-repeat="event in popularEvents | orderBy:'onsaleStartDateTime':true">  
                                                                         <td>{{event.eventId}}</td>  
-                                                                        <td>{{event.eventArtist}}</td>  
                                                                         <td>{{event.eventName}}</td> 
+                                                                        <td>{{event.eventArtist}}</td>
                                                                         <td>{{event.eventStartDateTime}}</td>  
                                                                         <td>{{event.onsaleStartDateTime}}</td>
-                                                                        <td><a ng-href="{{event.eventInfo.primaryEventUrl}}" target="_blank">Link</a></td>
+                                                                        <td>{{event.minPrice}}</td>  
+                                                                        <td>{{event.maxPrice}}</td>
+                                                                        <td><a ng-href="{{event.primaryEventUrl}}" target="_blank">Link</a></td>
                                                                         <td><a class="purchase" ng-click="queueForPurchase(event.eventId)"><i class="glyphicon glyphicon-shopping-cart"></i></a></td>                                                                    </td>  
                                                                     </tr>  
                                                                 </tbody>  

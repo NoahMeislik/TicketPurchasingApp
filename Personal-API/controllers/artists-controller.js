@@ -7,6 +7,7 @@ module.exports.getPopularArtists = function(req, res){
     artists.find({},(err,artists) => {
         if(err) return res.status(500).send("Unable to query artists at this time");
         res.json({
+            totalArtists: artists.length,
             artists: artists
         });
     });

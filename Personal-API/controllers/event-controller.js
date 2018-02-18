@@ -20,11 +20,20 @@ module.exports.getUpcomingEvents = function(req, res){
 module.exports.getPopularEvents = function(req, res){
     PopularEvents.find({}, (err, events) => {
         res.json({
+            totalEvents: events.length,
             popularEvents: events
         })
     })
 };
 
+module.exports.getQueuedEvents = function(req, res){
+    QueuedEvent.find({}, (err, events) => {
+        res.json({
+            totalQueuedEvents: events.length,
+            queuedEvents: events
+        })
+    })
+}
 
 module.exports.queueEvent = function(req, res){
     PopularEvents.findOne({ "eventId" : req.body.eventID}, (err, event) => {

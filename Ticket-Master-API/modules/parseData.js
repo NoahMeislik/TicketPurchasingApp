@@ -120,7 +120,7 @@ let getPopularEvents = function() {
                                 category1: popularEvent.classificationSegment,
                                 category2: popularEvent.classificationGenre,
                                 category3: popularEvent.classificationSubGenre,
-                                queryParameter: popularEvent.eventNotes + " - " + event.eventName,
+                                queryParameter: popularEvent.eventNotes + " - " + popularEvent.eventName,
                                 presale: popularEvent.presales,
                                 onsaleStartDateTime: popularEvent.onsaleStartDateTime,
                                 onsaleEndDateTime: popularEvent.onsaleEndDateTime,
@@ -150,7 +150,7 @@ let getPopularEvents = function() {
             };
 
 let initTMA = function(){
-  downloadData();
+//   downloadData();
   getPopularEvents();
 }
 

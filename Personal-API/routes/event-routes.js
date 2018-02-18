@@ -7,7 +7,10 @@ router.get('/get-upcoming-events', eventController.getUpcomingEvents);
 
 router.get('/get-popular-events', eventController.getPopularEvents);
 
+router.get('/get-queued-events', eventController.getQueuedEvents);
+
 router.post('/queue-event', eventController.queueEvent);
+
 
 
 module.exports = router;

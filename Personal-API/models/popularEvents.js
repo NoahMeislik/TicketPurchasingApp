@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
 module.exports = mongoose.model('popularEvent', {
+    eventArtist: {type: "String", required: true},
     eventId: {type: "String", required: true, unique: true},
     primaryEventUrl: {type: "String", required: true},
     resaleEventUrl: {type: "String", required: false},
