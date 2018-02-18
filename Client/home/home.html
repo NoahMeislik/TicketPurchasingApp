@@ -130,13 +130,13 @@
                                                             </thead>  
                                                             <tbody>  
                                                                 <tr ng-repeat="event in popularEvents | orderBy:'onsaleStartDateTime':true">  
-                                                                    <td>{{event.eventInfo.eventId}}</td>  
+                                                                    <td>{{event.eventId}}</td>  
                                                                     <td>{{event.eventArtist}}</td>  
-                                                                    <td>{{event.eventInfo.eventName}}</td> 
-                                                                    <td>{{event.eventInfo.eventStartDateTime}}</td>  
-                                                                    <td>{{event.eventInfo.onsaleStartDateTime}}</td>
+                                                                    <td>{{event.eventName}}</td> 
+                                                                    <td>{{event.eventStartDateTime}}</td>  
+                                                                    <td>{{event.onsaleStartDateTime}}</td>
                                                                     <td><a ng-href="{{event.eventInfo.primaryEventUrl}}" target="_blank">Link</a></td>
-                                                                    <td><a class="purchase" ng-click="queueForPurchase(event.eventInfo.eventId)"><i class="glyphicon glyphicon-shopping-cart"></i></a></td>                                                                    </td>  
+                                                                    <td><a class="purchase" ng-click="queueForPurchase(event.eventId)"><i class="glyphicon glyphicon-shopping-cart"></i></a></td>                                                                    </td>  
                                                                 </tr>  
                                                             </tbody>  
                                                         </table>

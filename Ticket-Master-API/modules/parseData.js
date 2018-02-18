@@ -8,15 +8,17 @@ const url = `http://app.ticketmaster.com/dc/feeds/v1/events.json?apikey=${config
 const gunzip = zlib.createGunzip()
 
 
-// init mongo connection
+ // init mongo connection
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 mongoose.connect(config.mongoDB);
 
+ //Models
 const Ticket = require(config.personalApiPaths.models.upcomingEvents);
 const PopularEvent = require(config.personalApiPaths.models.popularEvents)
 const artists = require(config.personalApiPaths.models.artists);
 const upcomingEvents = require(config.personalApiPaths.models.upcomingEvents);
+const queuedEvents = require(config.personalApiPaths.models.queuedEvents);
 
 
 
@@ -59,11 +61,13 @@ let downloadData = function() {
                     ticket.save(function(err) {
                         if (err) {
                             // TODO: Change this, I really cringe at the bad practice but oh well
-                            if (err.name == "BulkWriteError") return console.log("Duplicated data, skipping!");
-                            else return console.log(err.name);
+                            if (err.name == "BulkWriteError") {
+                                return console.log("Duplicated data, skipping!");
+                            } else {
+                                return console.log(err.name);
+                            }
                         }
                         console.log(`Adding new event to the datbase with ID: ${event.eventId}`);
-
                     });
                 }
             }
@@ -71,49 +75,78 @@ let downloadData = function() {
     });
 }
 
+// This combines both artists and the upcoming events together to find regex matches to find "popular" events
 let getPopularEvents = function() {
         let popularEvents = [];
         artists.find({}, (err, artists) => {
-                if (err) return res.status(500).send("Unable to query artists at this time");
-                for (let i = 0; i < artists.length; i++) {
-                    console.log(`Checking for popular event for: ${artists[i].name}`);
-                    upcomingEvents.findOne({
-                        "queryParameter": {
-                            $regex: artists[i].name,
-                            $options: 'i(\w+)'
-                        }
-                    }, (err, event) => {
-                        if (err) return console.log(err);
-                        // terrible practice
-                        if (artists.length - 1 === i) {
-                            console.log('Searched for all popular events!');
-                        }
+            if (err) {
+                return res.status(500).send("Unable to query artists at this time");
+            }
+            for (let i = 0; i < artists.length; i += 1) {
+                console.log(`Checking for popular event for: ${artists[i].name}`);
+                upcomingEvents.findOne({
+                    "queryParameter": {
+                        $regex: artists[i].name,
+                        $options: 'i(\w+)'
+                    }
+                }, (err, popularEvent) => {
+                    if (err) {
+                        return console.log(err);
+                    }
+                    // terrible practice
+                    if (artists.length - 1 === i) {
+                        console.log('Searched for all popular events!');
+                    }
 
-                        if (event !== null) {
-                            if (event.category1 == "Music") {
+                    if (popularEvent !== null) {
+                      if (popularEvent.category1 == "Music") {
+                          queuedEvents.find({ "eventId" : popularEvent.eventId}, (err, event) => {
+                            if (event !== null){
+                              let eventInfo = {
+                                eventArtist: artists[i].name,
+                                eventId: popularEvent.eventId,
+                                primaryEventUrl: popularEvent.primaryEventUrl,
+                                resaleEventUrl: popularEvent.resaleEventUrl,
+                                eventName: popularEvent.eventName,
+                                eventNotes: popularEvent.eventNotes,
+                                eventStatus: popularEvent.eventStatus,
+                                eventImageUrl: popularEvent.eventImageUrl,
+                                eventStartDateTime: popularEvent.eventStartDateTime,
+                                eventEndDateTime: popularEvent.eventEndDateTime,
+                                eventStartLocalDate: popularEvent.eventStartLocalDate,
+                                venue: popularEvent.venue,
+                                minPrice: popularEvent.minPrice,
+                                maxPrice: popularEvent.maxPrice,
+                                category1: popularEvent.classificationSegment,
+                                category2: popularEvent.classificationGenre,
+                                category3: popularEvent.classificationSubGenre,
+                                queryParameter: popularEvent.eventNotes + " - " + event.eventName,
+                                presale: popularEvent.presales,
+                                onsaleStartDateTime: popularEvent.onsaleStartDateTime,
+                                onsaleEndDateTime: popularEvent.onsaleEndDateTime,
+                              };
+                              popularEvent = new PopularEvent(eventInfo)
 
-                                {
-                                    let eventInfo = {
-                                        "eventArtist": artists[i].name,
-                                        "eventInfo": event
-                                    };
-                                    popularEvent = new popularEvents(eventInfo)
-
-                                    popularEvent.save(function(err) {
-                                        if (err) {
-                                            console.log("There was an error saving popular event!");
-                                        }
-                                    })
-                                }
-
-                            } 
-                            else {
-                                console.log(`Could not find popular event for: ${artists[i].name}`);
+                              popularEvent.save(function(err) {
+                                  if (err) {
+                                    if (err.name == "BulkWriteError") {
+                                        return console.log("Duplicated data, skipping!");
+                                    } else {
+                                        return console.log(err.name);
+                                    }
+                                  }
+                              }) 
                             }
+                        else{
+                        console.log("Event already queued")
                         }
-                    });
-                  };
-                });
+                          });
+                      }
+                    }
+                  }
+                );
+              }
+        });
             };
 
 let init = function(){

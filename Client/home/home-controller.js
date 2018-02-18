@@ -1,6 +1,6 @@
 (function(window, angular){
     angular.module('ticketPriceInterpreter')
-    .controller('homeCtrl', ['$scope', '$http', '$state', function($scope, $http, $state){
+    .controller('homeCtrl', ['$scope', '$http', '$state', '$window', function($scope, $http, $state, $window){
         $scope.artists =[]
         $scope.popularEvents = []
         $scope.preSales = []
@@ -25,11 +25,10 @@
 
         $scope.queueForPurchase = function(eventID)
         {
-            console.log(eventID);
             $scope.queuedEvent.eventID = eventID
             $http.post('/events/queue-event/', $scope.queuedEvent).then(function(response){
                 console.log('sent to queue')
-                // getPopularEvents();
+                init().then(window.location.reload());
             }, function(err){
                 console.log(err)
             })
