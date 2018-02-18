@@ -46,6 +46,11 @@ schedule.scheduleJob('0 0 * * *', () => {
     getPopularEventsModule.getPopularEvents();
 })
 
+// parseModule.downloadData();
+// getPopularEventsModule.getPopularEvents();
+parseModule.downloadData();
+
+
 //--/////////////////////--//
 //--    SpotifyAPI      --//
 //--////////////////////--//
