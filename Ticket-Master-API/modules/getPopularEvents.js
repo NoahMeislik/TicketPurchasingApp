@@ -35,11 +35,10 @@ let getPopularEvents = function() {
                 if (err) {
                     return console.log(err);
                 }
-
-                if (popularEvent !== null) {
+                if (popularEvent) {
                   if (popularEvent.category1 == "Music") {
-                      queuedEvents.find({ "eventId" : popularEvent.eventId}, (err, event) => {
-                        if (event !== null){
+                      queuedEvents.findOne({ "eventId" : popularEvent.eventId}, (err, event) => {
+                        if (event == null){
                          
                         let eventDataURL = `https://app.ticketmaster.com/discovery/v2/events/${popularEvent.eventId}.json?apikey=${config.apiKey}`; 
                         request(eventDataURL, (error,response,body)=>{

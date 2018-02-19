@@ -47,8 +47,10 @@ let downloadData = function() {
                         venue: event.venue,
                         minPrice: event.minPrice,
                         maxPrice: event.maxPrice,
+                        category1: event.classificationSegment,
+                        category2: event.classificationGenre,
+                        category3: event.classificationSubGenre,
                         queryParameter: event.eventNotes + " - " + event.eventName,
-                        presale: event.presales,
                         onsaleStartDateTime: event.onsaleStartDateTime,
                         onsaleEndDateTime: event.onsaleEndDateTime,
                     };
