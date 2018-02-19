@@ -45,7 +45,6 @@ schedule.scheduleJob('0 0 * * *', () => {
     // might be a problem as new data is streamed as it's checking. Might have to run at different times.
     getPopularEventsModule.getPopularEvents();
 })
-getPopularEventsModule.getPopularEvents();
 
 
 //--/////////////////////--//

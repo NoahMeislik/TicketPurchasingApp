@@ -108,27 +108,20 @@
                                                         <table id="events" class="table table-bordered table-hover table-striped">  
                                                                 <thead>  
                                                                     <tr> 
-                                                                        <th>Event ID</th>  
+                                                                       
                                                                         <th>Event Name</th>
                                                                         <th>Event Artist</th>
-                                                                        <th>Start Date</th>
                                                                         <th>On sale start date</th>
-                                                                        <th>Min price ($)</th>
-                                                                        <th>Max price ($)</th>
                                                                         <th>Link</th>
-                                                                        <th>View ticket sales</th>
+                                                                        <th>View More Info</th>
                                                                         <th>Queue for purchase</th>
                                                                     </tr>  
                                                                 </thead>  
                                                                 <tbody>  
                                                                     <tr class="event" ng-repeat="event in popularEvents | orderBy:'onsaleStartDateTime':true" >  
-                                                                        <td>{{event.eventId}}</td>  
                                                                         <td>{{event.eventName}}</td> 
                                                                         <td>{{event.eventArtist}}</td>
-                                                                        <td>{{event.eventStartDateTime}}</td>  
                                                                         <td>{{event.onsaleStartDateTime}}</td>
-                                                                        <td>{{event.minPrice}}</td>  
-                                                                        <td>{{event.maxPrice}}</td>
                                                                         <td><a ng-href="{{event.primaryEventUrl}}" target="_blank">Link</a></td>
                                                                         <td><a ng-click="goToEvent(event.eventId)" target="_blank">Link</a></td>
                                                                         <td data-eventid="{{event.eventId}}"><a class="purchase" style="cursor:pointer;" ng-click="queueForPurchase(event.eventId)"><i class="glyphicon glyphicon-shopping-cart"></i></a></td>  
@@ -144,33 +137,33 @@
                                                 <div id="qEvents" class="collapse" >
                                                     <div class="card-body">
                                                             <table id="queuedevents" class="table table-bordered table-hover table-striped">  
-                                                                    <thead>  
-                                                                        <tr> 
-                                                                            <th>Event ID</th>  
-                                                                            <th>Event Name</th>
-                                                                            <th>Event Artist</th>
-                                                                            <th>Start Date</th>
-                                                                            <th>On sale start date</th>
-                                                                            <th>Min price ($)</th>
-                                                                            <th>Max price ($)</th>
-                                                                            <th>Ticket master Link</th>
-                                                                            <th>Seat Map Link</th>
-                                                                        </tr>  
-                                                                    </thead>  
-                                                                    <tbody>  
-                                                                        <tr class="event" ng-repeat="event in queuedEvents | orderBy:'onsaleStartDateTime':true" >  
-                                                                            <td>{{event.eventId}}</td>  
-                                                                            <td>{{event.eventName}}</td> 
-                                                                            <td>{{event.eventArtist}}</td>
-                                                                            <td>{{event.eventStartDateTime}}</td>  
-                                                                            <td>{{event.onsaleStartDateTime}}</td>
-                                                                            <td>{{event.minPrice}}</td>  
-                                                                            <td>{{event.maxPrice}}</td>
-                                                                            <td><a ng-href="{{event.primaryEventUrl}}" target="_blank">Link</a></td>
-                                                                            <td><a ng-href="{{event.seatMap}}" target="_blank">Link</a></td>
-                                                                        </tr>  
-                                                                    </tbody>  
-                                                                </table>
+                                                                <thead>  
+                                                                    <tr> 
+                                                                        <th>Event ID</th>  
+                                                                        <th>Event Name</th>
+                                                                        <th>Event Artist</th>
+                                                                        <th>Start Date</th>
+                                                                        <th>On sale start date</th>
+                                                                        <th>Min price ($)</th>
+                                                                        <th>Max price ($)</th>
+                                                                        <th>Ticket master Link</th>
+                                                                        <th>Seat Map Link</th>
+                                                                    </tr>  
+                                                                </thead>  
+                                                                <tbody>  
+                                                                    <tr class="event" ng-repeat="event in queuedEvents | orderBy:'onsaleStartDateTime':true" >  
+                                                                        <td>{{event.eventId}}</td>  
+                                                                        <td>{{event.eventName}}</td> 
+                                                                        <td>{{event.eventArtist}}</td>
+                                                                        <td>{{event.eventStartDateTime}}</td>  
+                                                                        <td>{{event.onsaleStartDateTime}}</td>
+                                                                        <td>{{event.minPrice}}</td>  
+                                                                        <td>{{event.maxPrice}}</td>
+                                                                        <td><a ng-href="{{event.primaryEventUrl}}" target="_blank">Link</a></td>
+                                                                        <td><a ng-href="{{event.seatMap}}" target="_blank">Link</a></td>
+                                                                    </tr>  
+                                                                </tbody>  
+                                                            </table>
                                                     </div>
                                                 </div>
                                             </div>

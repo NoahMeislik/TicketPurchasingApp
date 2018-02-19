@@ -1,13 +1,54 @@
 <div id="wrapper">
-        <div ng-show="userLoggedIn">
-        
             <!-- Navigation -->
             <div id="page-wrapper">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Dashboard</h1>
+                        <h1>{{eventData.eventName}}</h1>
+                        <hr>
+                        <b>Event ID</b>: {{eventData.eventId}} <br>
+                        <b>Artist name</b>: {{eventData.eventArtist}} <br>
+                        <b>Event URL</b>: <a ng-href="{{eventData.primaryEventUrl}}" target="_blank">Click to view</a> <br> 
+                        <b>Event start time</b>: {{startDateTime}} <br>
+                        <b>Min Price</b>: {{eventData.minPrice}} <br>
+                        <b>Max Price</b>: {{eventData.maxPrice}} <br>
+                        <b>Public Sales</b>: <br>
+                        <table id="queuedevents" class="table table-bordered table-hover table-striped">  
+                            <thead>  
+                                <tr> 
+                                    <th>Start Date Time</th>
+                                    <th>End date time</th>  
+                                    <th>Start(?)</th>  
+                                </tr>  
+                            </thead>  
+                            <tbody>  
+                                <tr class="sale" ng-repeat="sale in eventData.sales[0]">  
+                                    <td>{{sale.public.startDateTime}}</td>  
+                                    <td>{{sale.public.endDateTime}}</td> 
+                                    <td>{{sale.public.startTBD}}</td>
+                                </tr>  
+                            </tbody>  
+                        </table>
+
+                        <b>Pre Sales</b>: <br>
+                        <table id="queuedevents" class="table table-bordered table-hover table-striped">  
+                            <thead>  
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Start Date Time</th>
+                                    <th>End date time</th>  
+                                </tr>  
+                            </thead>  
+                            <tbody>
+                                  
+                            </tbody>  
+                        </table>
+
+                        <br>
+
+                        <td><a ng-href="{{eventData.seatMap}}" target="_blank"><img src="{{eventData.seatMap}}"></a></td> <br>
+
+
+
                     </div>
-                    <!-- /.col-lg-12 -->
                 </div>
-        </div>
 </div>
