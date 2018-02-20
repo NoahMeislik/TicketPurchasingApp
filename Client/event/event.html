@@ -8,7 +8,7 @@
                         <b>Event ID</b>: {{eventData.eventId}} <br>
                         <b>Artist name</b>: {{eventData.eventArtist}} <br>
                         <b>Event URL</b>: <a ng-href="{{eventData.primaryEventUrl}}" target="_blank">Click to view</a> <br> 
-                        <b>Event start time</b>: {{startDateTime}} <br>
+                        <b>Event start time</b>: {{eventData.startDateTime}} <br>
                         <b>Min Price</b>: {{eventData.minPrice}} <br>
                         <b>Max Price</b>: {{eventData.maxPrice}} <br>
                         <b>Public Sales</b>: <br>
@@ -17,14 +17,14 @@
                                 <tr> 
                                     <th>Start Date Time</th>
                                     <th>End date time</th>  
-                                    <th>Start(?)</th>  
+                                    <th>Announced?</th>  
                                 </tr>  
                             </thead>  
                             <tbody>  
-                                <tr class="sale" ng-repeat="sale in eventData.sales[0]">  
-                                    <td>{{sale.public.startDateTime}}</td>  
-                                    <td>{{sale.public.endDateTime}}</td> 
-                                    <td>{{sale.public.startTBD}}</td>
+                                <tr class="sale">  
+                                    <td>{{publicSales.startDateTime}}</td>  
+                                    <td>{{publicSales.endDateTime}}</td> 
+                                    <td>{{publicSales.startTBD}}</td>
                                 </tr>  
                             </tbody>  
                         </table>
@@ -39,12 +39,16 @@
                                 </tr>  
                             </thead>  
                             <tbody>
-                                  
+                                <tr class="presale" ng-repeat="presale in preSales">
+                                    <td>{{presale.name}}</td>
+                                    <td>{{presale.startDateTime}}</td>
+                                    <td>{{presale.endDateTime}}</td>
+                                </tr>
                             </tbody>  
                         </table>
 
                         <br>
-
+                        <b>Seat Map</b>: <br>
                         <td><a ng-href="{{eventData.seatMap}}" target="_blank"><img src="{{eventData.seatMap}}"></a></td> <br>
 
 

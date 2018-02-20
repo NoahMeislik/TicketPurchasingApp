@@ -40,18 +40,22 @@ let getPopularEventsModule = require(config.ticketMasterApi.modules.getPopularEv
 
 // Run reparse and update the db at 12 every night
 schedule.scheduleJob('0 0 * * *', () => {
-    console.log("Streaming event data from file and grabbing popular events");
+    console.log("Streaming event data from file");
     parseModule.downloadData();
-    // might be a problem as new data is streamed as it's checking. Might have to run at different times.
-    getPopularEventsModule.getPopularEvents();
 })
 
+// Get popular events at 12:30 every night
+schedule.scheduleJob('30 0 * * *', () => {
+    console.log("Grabbing popular events")
+    getPopularEventsModule.getPopularEvents();
+})
 
 //--/////////////////////--//
 //--    SpotifyAPI      --//
 //--////////////////////--//
 let spotifyModule = require(config.spotifyApi.modules.getArtists);
-schedule.scheduleJob('0 0 * * 0', () => {
+// Get's popular artists at 10pm every sunday
+schedule.scheduleJob('0 22 * * 0', () => {
     console.log("Getting new artists on spotify");
     spotifyModule.initSpotify();
 });
