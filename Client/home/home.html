@@ -110,9 +110,7 @@
                                                                     <tr> 
                                                                        
                                                                         <th>Event Name</th>
-                                                                        <th>Event Artist</th>
                                                                         <th>On sale start date</th>
-                                                                        <th>Link</th>
                                                                         <th>View More Info</th>
                                                                         <th>Queue for purchase</th>
                                                                     </tr>  
@@ -120,9 +118,7 @@
                                                                 <tbody>  
                                                                     <tr class="event" ng-repeat="event in popularEvents | orderBy:'onsaleStartDateTime':true" >  
                                                                         <td>{{event.eventName}}</td> 
-                                                                        <td>{{event.eventArtist}}</td>
                                                                         <td>{{event.onsaleStartDateTime}}</td>
-                                                                        <td><a ng-href="{{event.primaryEventUrl}}" target="_blank">Link</a></td>
                                                                         <td><a ng-click="goToEvent(event.eventId)" target="_blank">Link</a></td>
                                                                         <td data-eventid="{{event.eventId}}"><a class="purchase" style="cursor:pointer;" ng-click="queueForPurchase(event.eventId)"><i class="glyphicon glyphicon-shopping-cart"></i></a></td>  
                                                                     </tr>  
