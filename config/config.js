@@ -33,5 +33,11 @@ module.exports = {
         modules: {
             getArtists: path.resolve('./Spotify-API/modules/getArtists.js'),
         }
+    },
+    webAutomater: {
+        username: 'noah.meislik@gmail.com',
+        password: 'carrera996',
+        loginPage: 'https://www.stubhub.com/my/profile'
     }
+
 }
