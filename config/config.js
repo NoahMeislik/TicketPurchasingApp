@@ -11,7 +11,8 @@ module.exports = {
             upcomingEvents : path.resolve('./Personal-API/models/upcomingEvents.js'),
             artists : path.resolve('./Personal-API/models/popularArtists.js'),
             popularEvents : path.resolve('./Personal-API/models/popularEvents.js'),
-            queuedEvents : path.resolve('./Personal-API/models/queuedEvents.js')
+            queuedEvents : path.resolve('./Personal-API/models/queuedEvents.js'),
+            tickets : path.resolve('./Personal-API/models/ticket.js')
         },
         routes: {
             eventRoutes : path.resolve('./Personal-API/routes/event-routes.js'),
