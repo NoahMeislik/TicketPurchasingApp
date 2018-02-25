@@ -13,7 +13,6 @@ module.exports.getPurchasedTickets = function(req, res){
     });
 }
 
-
 module.exports.insertNewTicket = function(req, res){
         if (!req.body.eventName || !req.body.purchasePrice || !req.body.resalePrice || !req.body.resaleLink) return res.status(400).send("You forgot a field.");
         let ticketToInsert = {

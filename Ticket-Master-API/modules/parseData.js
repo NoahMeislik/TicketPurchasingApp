@@ -75,8 +75,9 @@ let downloadData = function() {
 
 
 
+
 module.exports = {
-    downloadData: downloadData,
+    downloadData: downloadData
 }
 
 // let initTMA = function(){

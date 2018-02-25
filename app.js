@@ -21,6 +21,9 @@ var userRoutes = require(config.personalApiPaths.routes.userRoutes);
 var eventRoutes = require(config.personalApiPaths.routes.eventRoutes);
 var artistRoutes = require(config.personalApiPaths.routes.artistRoutes);
 
+//Modules
+let cleanDeprecatedModule = require(config.personalApiPaths.modules.cleanDeprecatedEvents);
+
 
 // Use of the Route
 app.use('/user', userRoutes);
@@ -28,8 +31,14 @@ app.use('/events', eventRoutes);
 app.use('/artists', artistRoutes);
 
 app.listen(config.port, function(){
-    console.log("Server Running on Port: 3000")
+    console.log(`Server Running on Port: ${config.port}`)
 })
+
+schedule.scheduleJob('*/10 * * * *', () => {
+    console.log("Cleaning up deprecated events.");
+    cleanDeprecatedModule.cleanDeprecatedEvents();
+})
+
 
 
 //--/////////////////////--//
@@ -49,6 +58,8 @@ schedule.scheduleJob('30 0 * * *', () => {
     console.log("Grabbing popular events")
     getPopularEventsModule.getPopularEvents();
 })
+
+
 
 //--/////////////////////--//
 //--    SpotifyAPI      --//
