@@ -6,6 +6,7 @@ const upcomingEvents = require(config.personalApiPaths.models.upcomingEvents);
 const artists = require(config.personalApiPaths.models.artists);
 const QueuedEvent = require(config.personalApiPaths.models.queuedEvents);
 const PopularEvents = require(config.personalApiPaths.models.popularEvents)
+const PurchasedEvent = require(config.personalApiPaths.models.purchasedEvents)
 
 
 module.exports.getUpcomingEvents = function(req, res){
@@ -63,7 +64,6 @@ module.exports.queueEvent = function(req, res){
             onsaleStartDateTime: event.onsaleStartDateTime,
             onsaleEndDateTime: event.onsaleEndDateTime,
         };
-        console.log(eventToQueue);
 
         let queuedEvent = new QueuedEvent(eventToQueue);
         queuedEvent.save(function(err){
@@ -111,4 +111,55 @@ module.exports.getEventById = function(req, res){
     })
 }
 
+module.exports.purchaseEvent = function(req, res){
+    if(!req.body.eventId || !req.body.purchasePrice){
+        return res.status(400).send("Specify an event Id please")
+    }
+
+    QueuedEvent.findOne({eventId:req.query.eventId}, function(err, event){
+        if(err){
+            return res.status(500).send("Unable to query event data at this time")
+        }
+
+        let eventToPurchase = {
+            eventArtist: event.eventArtist,
+            eventId: event.eventId,
+            primaryEventUrl: event.primaryEventUrl,
+            resaleEventUrl: event.resaleEventUrl,
+            eventName: event.eventName,
+            eventNotes: event.eventNotes,
+            eventStatus: event.eventStatus,
+            eventImageUrl: event.eventImageUrl,
+            eventStartDateTime: event.eventStartDateTime,
+            eventEndDateTime: event.eventEndDateTime,
+            eventStartLocalDate: event.eventStartLocalDate,
+            venue: event.venue,
+            minPrice: event.minPrice,
+            maxPrice: event.maxPrice,
+            category1: event.classificationSegment,
+            category2: event.classificationGenre,
+            category3: event.classificationSubGenre,
+            queryParameter: event.eventNotes + " - " + event.eventName,
+            sales: event.sales,
+            seatMap: event.seatMap,
+            onsaleStartDateTime: event.onsaleStartDateTime,
+            onsaleEndDateTime: event.onsaleEndDateTime,
+            purchasePrice: req.body.purchasePrice,
+
+        };
+
+        let purchasedEvent = new purchasedEvent(eventToPurchase);
+        puchasedEvent.save(function(err){
+            if (err){
+                if(err.name == "BulkWriteError") return console.log("Duplicated data, skipping!");
+                else return res.status(500).send("Unable to save new purchased Event")
+            }
+            console.log(`Adding new event to the purchased with ID: ${event.eventId}`);
+            res.status(200).send("Added new event to purchased")
+        })
+
+
+
+    });
+}
 
