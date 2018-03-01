@@ -4,6 +4,8 @@
         $scope.eventData =[];
         $scope.preSales = [];
         $scope.publicSales = [];
+        $scope.purchaseData = {};
+        $scope.showForm = true;
 
         // Recieves data from API endpoint and interprets it
         function getEventData(){
@@ -33,7 +35,13 @@
             })
         }
 
-       
+       $scope.purchaseTicket = function(){
+           var postUrl = '/events/purchase-event'
+           $scope.purchaseData.eventId = $scope.eventData.eventId
+           $http.post(postUrl, $scope.purchaseData).then(function(response){
+               console.log("Sent purchase data to DB")
+           })
+       }
 
         function init(){
             getEventData();

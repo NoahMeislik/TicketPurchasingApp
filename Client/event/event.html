@@ -54,14 +54,21 @@
                         <hr>
                         <h1>Purchase information</h1>
 
-                        <form role="form">
-                            <div class="form-group">
-                                <label>Text Input</label>
-                                <input class="form-control">
-                                <p class="help-block">Example block-level help text here.</p>
-                            </div>
-                        </form>
-
+                        <div ng-show="showForm">
+                            <form name="purchaseForm" ng-submit="purchaseTicket()" role="form">
+                                <input type="text" 
+                                       ng-model="purchaseData.purchasePrice" 
+                                       placeholder="Purchase Price"
+                                       required/> <br/>
+                
+                                <textarea type="text"
+                                          ng-model="purchaseData.listingPrice"
+                                          placeholder="Listing Price"></textarea>
+                
+                                <br/>
+                                <button type="submit">Submit PurchaseData</button>
+                            </form>
+                        </div>  
                     </div>
                 </div>
 </div>

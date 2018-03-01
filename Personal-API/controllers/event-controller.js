@@ -116,7 +116,7 @@ module.exports.purchaseEvent = function(req, res){
         return res.status(400).send("Specify an event Id please")
     }
 
-    QueuedEvent.findOne({eventId:req.query.eventId}, function(err, event){
+    QueuedEvent.findOne({eventId:req.body.eventId}, function(err, event){
         if(err){
             return res.status(500).send("Unable to query event data at this time")
         }
@@ -148,16 +148,24 @@ module.exports.purchaseEvent = function(req, res){
 
         };
 
-        let purchasedEvent = new purchasedEvent(eventToPurchase);
-        puchasedEvent.save(function(err){
+        let purchasedEvent = new PurchasedEvent(eventToPurchase);
+        purchasedEvent.save(function(err){
             if (err){
                 if(err.name == "BulkWriteError") return console.log("Duplicated data, skipping!");
                 else return res.status(500).send("Unable to save new purchased Event")
             }
             console.log(`Adding new event to the purchased with ID: ${event.eventId}`);
             res.status(200).send("Added new event to purchased")
+            QueuedEvent.findOneAndRemove({eventId:req.body.eventId}, function(err){
+                if(err){
+                    console.log(err)
+                }
+            })
         })
 
+        if (!event){
+            console.log("There is no queued event for this purchase")
+        }
 
 
     });
