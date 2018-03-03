@@ -59,6 +59,7 @@ schedule.scheduleJob('30 0 * * *', () => {
     getPopularEventsModule.getPopularEvents();
 })
 
+getPopularEventsModule.getPopularEvents();
 
 
 //--/////////////////////--//

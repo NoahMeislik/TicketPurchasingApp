@@ -112,62 +112,74 @@ module.exports.getEventById = function(req, res){
 }
 
 module.exports.purchaseEvent = function(req, res){
-    if(!req.body.eventId || !req.body.purchasePrice){
+    if(!req.body.eventId){
         return res.status(400).send("Specify an event Id please")
     }
 
-    QueuedEvent.findOne({eventId:req.body.eventId}, function(err, event){
-        if(err){
-            return res.status(500).send("Unable to query event data at this time")
+    PurchasedEvent.findOne({eventId:req.body.eventId}, function(err, purchasedEvent){
+        if(!purchasedEvent){
+            QueuedEvent.findOne({eventId:req.body.eventId}, function(err, event){
+                if(err){
+                    return res.status(500).send("Unable to query event data at this time")
+                }
+        
+                let eventToPurchase = {
+                    eventArtist: event.eventArtist,
+                    eventId: event.eventId,
+                    primaryEventUrl: event.primaryEventUrl,
+                    resaleEventUrl: event.resaleEventUrl,
+                    eventName: event.eventName,
+                    eventNotes: event.eventNotes,
+                    eventStatus: event.eventStatus,
+                    eventImageUrl: event.eventImageUrl,
+                    eventStartDateTime: event.eventStartDateTime,
+                    eventEndDateTime: event.eventEndDateTime,
+                    eventStartLocalDate: event.eventStartLocalDate,
+                    venue: event.venue,
+                    minPrice: event.minPrice,
+                    maxPrice: event.maxPrice,
+                    category1: event.classificationSegment,
+                    category2: event.classificationGenre,
+                    category3: event.classificationSubGenre,
+                    queryParameter: event.eventNotes + " - " + event.eventName,
+                    sales: event.sales,
+                    seatMap: event.seatMap,
+                    onsaleStartDateTime: event.onsaleStartDateTime,
+                    onsaleEndDateTime: event.onsaleEndDateTime,
+                    purchasePrice: req.body.purchasePrice,
+                    listingPrice: req.body.listingPrice
+                };
+        
+                let purchasedEvent = new PurchasedEvent(eventToPurchase);
+                purchasedEvent.save(function(err){
+                    if (err){
+                        if(err.name == "BulkWriteError") return console.log("Duplicated data, skipping!");
+                        else return res.status(500).send("Unable to save new purchased Event")
+                    }
+                    console.log(`Adding new event to the purchased with ID: ${event.eventId}`);
+                    res.status(200).send("Added new event to purchased")
+                    QueuedEvent.findOneAndRemove({eventId:req.body.eventId}, function(err){
+                        if(err){
+                            console.log(err)
+                        }
+                    })
+                })
+        
+                if (!event){
+                    console.log("There is no queued event for this purchase")
+                }
+            })  
         }
-
-        let eventToPurchase = {
-            eventArtist: event.eventArtist,
-            eventId: event.eventId,
-            primaryEventUrl: event.primaryEventUrl,
-            resaleEventUrl: event.resaleEventUrl,
-            eventName: event.eventName,
-            eventNotes: event.eventNotes,
-            eventStatus: event.eventStatus,
-            eventImageUrl: event.eventImageUrl,
-            eventStartDateTime: event.eventStartDateTime,
-            eventEndDateTime: event.eventEndDateTime,
-            eventStartLocalDate: event.eventStartLocalDate,
-            venue: event.venue,
-            minPrice: event.minPrice,
-            maxPrice: event.maxPrice,
-            category1: event.classificationSegment,
-            category2: event.classificationGenre,
-            category3: event.classificationSubGenre,
-            queryParameter: event.eventNotes + " - " + event.eventName,
-            sales: event.sales,
-            seatMap: event.seatMap,
-            onsaleStartDateTime: event.onsaleStartDateTime,
-            onsaleEndDateTime: event.onsaleEndDateTime,
-            purchasePrice: req.body.purchasePrice,
-
-        };
-
-        let purchasedEvent = new PurchasedEvent(eventToPurchase);
-        purchasedEvent.save(function(err){
-            if (err){
-                if(err.name == "BulkWriteError") return console.log("Duplicated data, skipping!");
-                else return res.status(500).send("Unable to save new purchased Event")
-            }
-            console.log(`Adding new event to the purchased with ID: ${event.eventId}`);
-            res.status(200).send("Added new event to purchased")
-            QueuedEvent.findOneAndRemove({eventId:req.body.eventId}, function(err){
+        if(purchasedEvent){
+            PurchasedEvent.findOneAndUpdate({eventId:req.body.eventId}, {listingPrice: req.body.listingPrice}, function(err){
                 if(err){
                     console.log(err)
+                    return res.status(500).send("Unable to update listingPrice")
                 }
+                console.log(`Updated listing price of event with id: ${req.body.eventId}`)
             })
-        })
 
-        if (!event){
-            console.log("There is no queued event for this purchase")
         }
-
-
-    });
+    })
 }
 
