@@ -40,7 +40,7 @@ let getPopularEvents = function() {
                   if (popularEvent.category1 == "Music") {
                       queuedEvents.findOne({ "eventId" : popularEvent.eventId}, (err, event) => {
                         if (!event){
-                            PurchasedEvent.findOne({ "eventId" : popularEvent.eventId}, function(err, puchasedEvent){
+                            PurchasedEvent.findOne({ "eventId" : popularEvent.eventId}, function(err, purchasedEvent){
                                 if(!purchasedEvent){
                                     let eventDataURL = `https://app.ticketmaster.com/discovery/v2/events/${popularEvent.eventId}.json?apikey=${config.apiKey}`; 
                                     request(eventDataURL, (error,response,body)=>{

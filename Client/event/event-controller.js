@@ -5,7 +5,7 @@
         $scope.preSales = [];
         $scope.publicSales = [];
         $scope.purchaseData = {};
-        $scope.showForm = true;
+        $scope.purchased = true;
 
         // Recieves data from API endpoint and interprets it
         function getEventData(){
@@ -30,6 +30,9 @@
                 $scope.eventData.startDateTime = moment($scope.eventData.StartDateTime).format("dddd, MMMM D YYYY hh:mma Z");
                 $scope.eventData.endDateTime = moment($scope.eventData.endDateTime).format("dddd, MMMM D YYYY hh:mma Z");
 
+                if(response.data.purchased){
+                    $scope.purchased = !$scope.purchased
+                }
             }, function(err){
                 console.log(err)
             })

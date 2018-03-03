@@ -54,19 +54,21 @@
                         <hr>
                         <h1>Purchase information</h1>
 
-                        <div ng-show="showForm">
-                            <form name="purchaseForm" ng-submit="purchaseTicket()" role="form">
+                        <div ng-show="purchased">
+                            <form class="col-md-2" name="purchaseForm" ng-submit="purchaseTicket()" role="form">
                                 <input type="text" 
+                                       class="form-control"
                                        ng-model="purchaseData.purchasePrice" 
                                        placeholder="Purchase Price"
-                                       required/> <br/>
+                                       /> <br/>
                 
                                 <input type="text"
+                                class="form-control"
                                           ng-model="purchaseData.listingPrice"
                                           placeholder="Listing Price"></input>
                 
                                 <br/>
-                                <button type="submit">Submit Purchase Data</button>
+                                <button  class="btn btn-primary" type="submit">Submit Purchase Data</button>
                             </form>
                         </div>  
                     </div>
