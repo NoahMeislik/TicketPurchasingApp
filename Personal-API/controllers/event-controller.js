@@ -89,20 +89,42 @@ module.exports.getEventById = function(req, res){
         return res.status(400).send("Specify an event Id please");
     }
 
-    PopularEvents.findOne({eventId:req.query.eventId}, function(err, event){
+    PopularEvents.findOne({eventId:req.query.eventId}, function(err, popularEvent){
         if(err){
             return res.status(500).send("Unable to query event data at this time")
+            console.log(err)
         }
-        if (event)
+        if (popularEvent)
         {
             res.json({
-                event: event
+                event: popularEvent,
+                purchased: false
             })
-        } else {
+        }
+        if(!popularEvent){
             QueuedEvent.findOne({eventId:req.query.eventId}, function(err, queuedEvent){
+                if(err){
+                    return res.status(500).send("Unable to query event data at this time")
+                    console.log(err)
+                }
                 if (queuedEvent){
                     res.json({
-                        event:queuedEvent
+                        event:queuedEvent,
+                        purchased: false
+                    })
+                }
+                if(!queuedEvent){
+                    PurchasedEvent.findOne({eventId:req.query.eventId}, function(err, purchasedEvent){
+                        if(err){
+                            return res.status(500).send("Unable to query event data at this time")
+                            console.log(err)
+                        }
+                        if(purchasedEvent){
+                        res.json({
+                            event:purchasedEvent,
+                            purchased: true
+                        })
+                    }
                     })
                 }
             })
@@ -115,6 +137,7 @@ module.exports.purchaseEvent = function(req, res){
     if(!req.body.eventId){
         return res.status(400).send("Specify an event Id please")
     }
+    console.log(req.body.listingPrice)
 
     PurchasedEvent.findOne({eventId:req.body.eventId}, function(err, purchasedEvent){
         if(!purchasedEvent){
@@ -177,6 +200,11 @@ module.exports.purchaseEvent = function(req, res){
                     return res.status(500).send("Unable to update listingPrice")
                 }
                 console.log(`Updated listing price of event with id: ${req.body.eventId}`)
+                QueuedEvent.findOneAndRemove({eventId:req.body.eventId}, function(err){
+                    if(err){
+                        console.log(err)
+                    }
+                })
             })
 
         }

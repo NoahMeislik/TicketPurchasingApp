@@ -15,6 +15,7 @@ const PopularEvent = require(config.personalApiPaths.models.popularEvents)
 const artists = require(config.personalApiPaths.models.artists);
 const upcomingEvents = require(config.personalApiPaths.models.upcomingEvents);
 const queuedEvents = require(config.personalApiPaths.models.queuedEvents);
+const PurchasedEvent = require(config.personalApiPaths.models.purchasedEvents)
 
 
 // This combines both artists and the upcoming events together to find regex matches to find "popular" events
@@ -38,52 +39,56 @@ let getPopularEvents = function() {
                 if (popularEvent) {
                   if (popularEvent.category1 == "Music") {
                       queuedEvents.findOne({ "eventId" : popularEvent.eventId}, (err, event) => {
-                        if (event == null){
-                            let eventDataURL = `https://app.ticketmaster.com/discovery/v2/events/${popularEvent.eventId}.json?apikey=${config.apiKey}`; 
-                            request(eventDataURL, (error,response,body)=>{
-                                if (error) return console.log(error);
-                                let parsed = JSON.parse(body);
-                                let seatmapData = "N/A";
-                                if (parsed.seatmap) seatmapData = parsed.seatmap.staticUrl;
-                                
-                                let eventInfo = {
-                                    eventArtist: artists[i].name,
-                                    eventId: popularEvent.eventId,
-                                    primaryEventUrl: popularEvent.primaryEventUrl,
-                                    resaleEventUrl: popularEvent.resaleEventUrl,
-                                    eventName: popularEvent.eventName,
-                                    eventNotes: popularEvent.eventNotes,
-                                    eventStatus: popularEvent.eventStatus,
-                                    eventImageUrl: popularEvent.eventImageUrl,
-                                    eventStartDateTime: popularEvent.eventStartDateTime,
-                                    eventEndDateTime: popularEvent.eventEndDateTime,
-                                    eventStartLocalDate: popularEvent.eventStartLocalDate,
-                                    venue: popularEvent.venue,
-                                    minPrice: popularEvent.minPrice,
-                                    maxPrice: popularEvent.maxPrice,
-                                    category1: popularEvent.classificationSegment,
-                                    category2: popularEvent.classificationGenre,
-                                    category3: popularEvent.classificationSubGenre,
-                                    queryParameter: popularEvent.eventNotes + " - " + popularEvent.eventName,
-                                    sales: parsed.sales,
-                                    seatMap: seatmapData,
-                                    onsaleStartDateTime: popularEvent.onsaleStartDateTime,
-                                    onsaleEndDateTime: popularEvent.onsaleEndDateTime,
-                                };
-                                popularEvent = new PopularEvent(eventInfo)
-
-                                popularEvent.save(function(err) {
-                                    if (err) {
-                                        if (err.name == "BulkWriteError") {
-                                            return console.log("Duplicated data, skipping!");
-                                        } 
-                                        else {
-                                            return console.log(err);
-                                        }
-                                    }
-                                    else console.log("Saved new popular event to DB");
-                                });
-                            });
+                        if (!event){
+                            PurchasedEvent.findOne({ "eventId" : popularEvent.eventId}, function(err, puchasedEvent){
+                                if(!purchasedEvent){
+                                    let eventDataURL = `https://app.ticketmaster.com/discovery/v2/events/${popularEvent.eventId}.json?apikey=${config.apiKey}`; 
+                                    request(eventDataURL, (error,response,body)=>{
+                                        if (error) return console.log(error);
+                                        let parsed = JSON.parse(body);
+                                        let seatmapData = "N/A";
+                                        if (parsed.seatmap) seatmapData = parsed.seatmap.staticUrl;
+                                        
+                                        let eventInfo = {
+                                            eventArtist: artists[i].name,
+                                            eventId: popularEvent.eventId,
+                                            primaryEventUrl: popularEvent.primaryEventUrl,
+                                            resaleEventUrl: popularEvent.resaleEventUrl,
+                                            eventName: popularEvent.eventName,
+                                            eventNotes: popularEvent.eventNotes,
+                                            eventStatus: popularEvent.eventStatus,
+                                            eventImageUrl: popularEvent.eventImageUrl,
+                                            eventStartDateTime: popularEvent.eventStartDateTime,
+                                            eventEndDateTime: popularEvent.eventEndDateTime,
+                                            eventStartLocalDate: popularEvent.eventStartLocalDate,
+                                            venue: popularEvent.venue,
+                                            minPrice: popularEvent.minPrice,
+                                            maxPrice: popularEvent.maxPrice,
+                                            category1: popularEvent.classificationSegment,
+                                            category2: popularEvent.classificationGenre,
+                                            category3: popularEvent.classificationSubGenre,
+                                            queryParameter: popularEvent.eventNotes + " - " + popularEvent.eventName,
+                                            sales: parsed.sales,
+                                            seatMap: seatmapData,
+                                            onsaleStartDateTime: popularEvent.onsaleStartDateTime,
+                                            onsaleEndDateTime: popularEvent.onsaleEndDateTime,
+                                        };
+                                        popularEvent = new PopularEvent(eventInfo)
+        
+                                        popularEvent.save(function(err) {
+                                            if (err) {
+                                                if (err.name == "BulkWriteError") {
+                                                    return console.log("Duplicated data, skipping!");
+                                                } 
+                                                else {
+                                                    return console.log(err);
+                                                }
+                                            }
+                                            else console.log("Saved new popular event to DB");
+                                        });
+                                    });
+                                }
+                            })
 
                     }
 

@@ -21,5 +21,5 @@ module.exports = mongoose.model('purchasedTickets', {
     onsaleStartDateTime: {type: "String", required: true},
     onsaleEndDateTime: {type: "String", required: true},
     purchasePrice: {type: "Number", required: true},
-    resalePrice: {type: "Number", required: false}
+    listingPrice: {type: "Number", required: false}
 });
