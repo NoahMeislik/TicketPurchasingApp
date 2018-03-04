@@ -78,7 +78,7 @@
                         </div>
                         <div ng-show="purchased">
                             <h1>Purchase information</h1>
-                            <form class="col-md-3" name="updatePurchasePrice" ng-submit="updatePurchasePrice()" role="form">
+                            <form class="col-md-3" name="updatePurchasePriceForm" ng-submit="updatePurchasePrice()" role="form">
                                 <input type="text" 
                                     class="form-control"
                                     ng-model="purchaseData.purchasePrice" 
@@ -86,7 +86,7 @@
                                 <br/>
                                 <button class="btn btn-primary" type="submit">Update Purchase Price</button>
                             </form>
-                            <form class="col-md-3" name="updateListingPrice" ng-submit="updateListingPrice()" role="form">
+                            <form class="col-md-3" name="updateListingPriceForm" ng-submit="updateListingPrice()" role="form">
                                 <input type="text" 
                                     class="form-control"
                                     ng-model="purchaseData.listingPrice" 
@@ -94,7 +94,7 @@
                                 <br/>
                                 <button class="btn btn-primary" type="submit">Update Listing Price</button>
                             </form>
-                            <form class="col-md-3" name="updateResalePrice" ng-submit="updateResalePrice()" role="form">
+                            <form class="col-md-3" name="updateResalePriceForm" ng-submit="updateResalePrice()" role="form">
                                 <input type="text" 
                                     class="form-control"
                                     ng-model="purchaseData.resalePrice" 

@@ -146,6 +146,7 @@ module.exports.updatePurchasePrice = function(req, res){
             return res.status(500).send("There was an error updating the purchase price")
         }
         console.log(`Updated purchase price of event with id: ${req.body.eventId}`)
+        return res.status(200).send("Successfully updated purchase price")
     })
 }
 
@@ -159,6 +160,7 @@ module.exports.updateListingPrice = function(req, res){
             return res.status(500).send("There was an error updating the listing price")
         }
         console.log(`Updated listing price of event with id: ${req.body.eventId}`)
+        return res.status(200).send("Successfully updated listing price")
     })
 }
 
@@ -173,5 +175,6 @@ module.exports.updateResalePrice = function(req, res){
             return res.status(500).send("There was an error updating the resale price")
         }
         console.log(`Updated resale price of event with id: ${req.body.eventId}`)
+        return res.status(200).send("Successfully updated resale price")
     })
 }

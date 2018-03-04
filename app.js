@@ -60,7 +60,6 @@ schedule.scheduleJob('30 0 * * *', () => {
     console.log("Grabbing popular events")
     getPopularEventsModule.getPopularEvents();
 })
-getPopularEventsModule.getPopularEvents();
 
 
 //--/////////////////////--//

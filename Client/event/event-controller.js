@@ -42,39 +42,40 @@
            var postUrl = '/purchase/input-new-event'
            $scope.purchaseData.eventId = $scope.eventData.eventId
            $http.post(postUrl, $scope.purchaseData).then(function(response){
-               console.log("Sent purchase data to DB")
-               $window.location.reload()
-           })
+            window.location.reload();
+            }, function(err){
+                console.error(err);
+            })
        }
 
        $scope.updatePurchasePrice = function(){
            var postUrl = '/purchase/update-purchase-price'
            $scope.purchaseData.eventId = $scope.eventData.eventId
            $http.post(postUrl, $scope.purchaseData).then(function(response){
-               console.log("Updated purchase price")
-               $window.location.reload()
-
-           })
+            window.location.reload();
+            }, function(err){
+                console.error(err);
+            })
        }
 
        $scope.updateListingPrice = function(){
         var postUrl = '/purchase/update-listing-price'
         $scope.purchaseData.eventId = $scope.eventData.eventId
         $http.post(postUrl, $scope.purchaseData).then(function(response){
-            console.log("Updated listing price")  
-            $window.location.reload()
-          
-        })
+            window.location.reload();
+            }, function(err){
+                console.error(err);
+            })
     }
 
     $scope.updateResalePrice = function(){
         var postUrl = '/purchase/update-resale-price'
         $scope.purchaseData.eventId = $scope.eventData.eventId
         $http.post(postUrl, $scope.purchaseData).then(function(response){
-            console.log("Updated resale price")
-            $window.location.reload()
-
-        })
+            window.location.reload();
+            }, function(err){
+                console.error(err);
+            })
     }
         function init(){
             getEventData();
