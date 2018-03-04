@@ -18,6 +18,7 @@ module.exports = {
             eventRoutes : path.resolve('./Personal-API/routes/event-routes.js'),
             userRoutes : path.resolve('./Personal-API/routes/user-routes.js'),
             artistRoutes : path.resolve('./Personal-API/routes/artists-routes.js'),
+            purchaseRoutes : path.resolve('./Personal-API/routes/purchase-routes.js'),
         },
         modules: {
             cleanDeprecatedEvents: path.resolve('./Personal-API/modules/cleanDeprecatedEvents.js'),

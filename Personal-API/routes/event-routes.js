@@ -11,8 +11,6 @@ router.get('/get-event-by-id', eventController.getEventById);
 
 // Post Routes
 router.post('/queue-event', eventController.queueEvent);
-router.post('/purchase-event', eventController.purchaseEvent);
-
 
 
 module.exports = router;

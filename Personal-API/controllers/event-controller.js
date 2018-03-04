@@ -98,7 +98,8 @@ module.exports.getEventById = function(req, res){
         {
             res.json({
                 event: popularEvent,
-                purchased: false
+                purchased: false,
+                isQueued: false                
             })
         }
         if(!popularEvent){
@@ -110,7 +111,8 @@ module.exports.getEventById = function(req, res){
                 if (queuedEvent){
                     res.json({
                         event:queuedEvent,
-                        purchased: false
+                        purchased: false,
+                        isQueued: true
                     })
                 }
                 if(!queuedEvent){
@@ -122,7 +124,8 @@ module.exports.getEventById = function(req, res){
                         if(purchasedEvent){
                         res.json({
                             event:purchasedEvent,
-                            purchased: true
+                            purchased: true,
+                            isQueued: false
                         })
                     }
                     })
@@ -132,82 +135,3 @@ module.exports.getEventById = function(req, res){
 
     })
 }
-
-module.exports.purchaseEvent = function(req, res){
-    if(!req.body.eventId){
-        return res.status(400).send("Specify an event Id please")
-    }
-    console.log(req.body.listingPrice)
-
-    PurchasedEvent.findOne({eventId:req.body.eventId}, function(err, purchasedEvent){
-        if(!purchasedEvent){
-            QueuedEvent.findOne({eventId:req.body.eventId}, function(err, event){
-                if(err){
-                    return res.status(500).send("Unable to query event data at this time")
-                }
-        
-                let eventToPurchase = {
-                    eventArtist: event.eventArtist,
-                    eventId: event.eventId,
-                    primaryEventUrl: event.primaryEventUrl,
-                    resaleEventUrl: event.resaleEventUrl,
-                    eventName: event.eventName,
-                    eventNotes: event.eventNotes,
-                    eventStatus: event.eventStatus,
-                    eventImageUrl: event.eventImageUrl,
-                    eventStartDateTime: event.eventStartDateTime,
-                    eventEndDateTime: event.eventEndDateTime,
-                    eventStartLocalDate: event.eventStartLocalDate,
-                    venue: event.venue,
-                    minPrice: event.minPrice,
-                    maxPrice: event.maxPrice,
-                    category1: event.classificationSegment,
-                    category2: event.classificationGenre,
-                    category3: event.classificationSubGenre,
-                    queryParameter: event.eventNotes + " - " + event.eventName,
-                    sales: event.sales,
-                    seatMap: event.seatMap,
-                    onsaleStartDateTime: event.onsaleStartDateTime,
-                    onsaleEndDateTime: event.onsaleEndDateTime,
-                    purchasePrice: req.body.purchasePrice,
-                    listingPrice: req.body.listingPrice
-                };
-        
-                let purchasedEvent = new PurchasedEvent(eventToPurchase);
-                purchasedEvent.save(function(err){
-                    if (err){
-                        if(err.name == "BulkWriteError") return console.log("Duplicated data, skipping!");
-                        else return res.status(500).send("Unable to save new purchased Event")
-                    }
-                    console.log(`Adding new event to the purchased with ID: ${event.eventId}`);
-                    res.status(200).send("Added new event to purchased")
-                    QueuedEvent.findOneAndRemove({eventId:req.body.eventId}, function(err){
-                        if(err){
-                            console.log(err)
-                        }
-                    })
-                })
-        
-                if (!event){
-                    console.log("There is no queued event for this purchase")
-                }
-            })  
-        }
-        if(purchasedEvent){
-            PurchasedEvent.findOneAndUpdate({eventId:req.body.eventId}, {listingPrice: req.body.listingPrice}, function(err){
-                if(err){
-                    console.log(err)
-                    return res.status(500).send("Unable to update listingPrice")
-                }
-                console.log(`Updated listing price of event with id: ${req.body.eventId}`)
-                QueuedEvent.findOneAndRemove({eventId:req.body.eventId}, function(err){
-                    if(err){
-                        console.log(err)
-                    }
-                })
-            })
-
-        }
-    })
-}
-

@@ -52,25 +52,57 @@
                         <td><a ng-href="{{eventData.seatMap}}" target="_blank"><img src="{{eventData.seatMap}}"></a></td> <br>
 
                         <hr>
-                        <h1>Purchase information</h1>
+                        <div ng-show="isQueued">
+                            <h1>Purchase information</h1>
 
+                            <div ng-show="!purchased">
+                                <form class="col-md-2" name="purchaseForm" ng-submit="inputNewEvent()" role="form">
+                                    <input type="text" 
+                                        class="form-control"
+                                        ng-model="purchaseData.purchasePrice" 
+                                        placeholder="Purchase Price"></input>
+                    
+                                    <input type="text"
+                                            class="form-control"
+                                            ng-model="purchaseData.listingPrice"
+                                            placeholder="Listing Price"></input>
+                                    
+                                    <input type="text"
+                                            class="form-control"
+                                            ng-model="purchaseData.resalePrice"
+                                            placeholder="Resale Price"></input>
+                                    <br/>
+                                    <button  class="btn btn-primary" type="submit">Submit Purchase Data</button>
+                                </form>
+                            </div>  
+                        </div>
                         <div ng-show="purchased">
-                            <form class="col-md-2" name="purchaseForm" ng-submit="purchaseTicket()" role="form">
+                            <h1>Purchase information</h1>
+                            <form class="col-md-3" name="updatePurchasePrice" ng-submit="updatePurchasePrice()" role="form">
                                 <input type="text" 
-                                       class="form-control"
-                                       ng-model="purchaseData.purchasePrice" 
-                                       placeholder="Purchase Price"
-                                       /> <br/>
-                
-                                <input type="text"
-                                class="form-control"
-                                          ng-model="purchaseData.listingPrice"
-                                          placeholder="Listing Price"></input>
-                
+                                    class="form-control"
+                                    ng-model="purchaseData.purchasePrice" 
+                                    placeholder="Updated Purchase Price"></input>
                                 <br/>
-                                <button  class="btn btn-primary" type="submit">Submit Purchase Data</button>
+                                <button class="btn btn-primary" type="submit">Update Purchase Price</button>
                             </form>
-                        </div>  
-                    </div>
+                            <form class="col-md-3" name="updateListingPrice" ng-submit="updateListingPrice()" role="form">
+                                <input type="text" 
+                                    class="form-control"
+                                    ng-model="purchaseData.listingPrice" 
+                                    placeholder="Updated Listing Price"></input>
+                                <br/>
+                                <button class="btn btn-primary" type="submit">Update Listing Price</button>
+                            </form>
+                            <form class="col-md-3" name="updateResalePrice" ng-submit="updateResalePrice()" role="form">
+                                <input type="text" 
+                                    class="form-control"
+                                    ng-model="purchaseData.resalePrice" 
+                                    placeholder="Updated Resale Price"></input>
+                                <br/>
+                                <button class="btn btn-primary" type="submit">Update Resale Price</button>
+                            </form>
+                        </div>
                 </div>
+            </div>
 </div>

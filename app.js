@@ -20,6 +20,7 @@ process.env.APP_SECRET = config.appSecret;
 var userRoutes = require(config.personalApiPaths.routes.userRoutes);
 var eventRoutes = require(config.personalApiPaths.routes.eventRoutes);
 var artistRoutes = require(config.personalApiPaths.routes.artistRoutes);
+var purchaseRoutes = require(config.personalApiPaths.routes.purchaseRoutes);
 
 //Modules
 let cleanDeprecatedModule = require(config.personalApiPaths.modules.cleanDeprecatedEvents);
@@ -29,6 +30,7 @@ let cleanDeprecatedModule = require(config.personalApiPaths.modules.cleanDepreca
 app.use('/user', userRoutes);
 app.use('/events', eventRoutes);
 app.use('/artists', artistRoutes);
+app.use('/purchase', purchaseRoutes);
 
 app.listen(config.port, function(){
     console.log(`Server Running on Port: ${config.port}`)
@@ -58,6 +60,7 @@ schedule.scheduleJob('30 0 * * *', () => {
     console.log("Grabbing popular events")
     getPopularEventsModule.getPopularEvents();
 })
+getPopularEventsModule.getPopularEvents();
 
 
 //--/////////////////////--//
