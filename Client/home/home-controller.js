@@ -6,7 +6,9 @@
         $scope.totalArtists = 0
         $scope.totalEvents = 0
         $scope.totalQueuedEvents = 0
-        $scope.queuedEvent = {}
+        $scope.totalPurchasedEvents = 0;
+        $scope.queuedEvent = {};
+        $scope.purchasedEvents = []
 
         $scope.userLoggedIn = userSvc.isLoggedIn;
 
@@ -50,6 +52,15 @@
             })
         }
 
+        function getPurchasedEvents(){
+            $http.get('/purchase/get-purchased-events').then(function(response){
+                $scope.purchasedEvents = response.data ? response.data.purchasedEvents : [];
+                $scope.totalPurchasedEvents = response.data ? response.data.totalPurchasedEvents : 0;
+            }, function(err){
+                console.log(err);
+            })
+        }
+
         $scope.goToEvent = function(eventId) {
             $state.go('event', {eventID: eventId})
         }
@@ -58,6 +69,7 @@
             getArtists();
             getPopularEvents();
             getQueuedEvents();
+            getPurchasedEvents();
         }
         
         init()

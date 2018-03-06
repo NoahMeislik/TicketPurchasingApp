@@ -10,5 +10,7 @@ router.post('/update-purchase-price', purchaseController.updatePurchasePrice);
 router.post('/update-listing-price', purchaseController.updateListingPrice);
 router.post('/update-resale-price', purchaseController.updateResalePrice);
 
+// Get Routes
+router.get('/get-purchased-events', purchaseController.getPurchasedEvents);
 
 module.exports = router;
