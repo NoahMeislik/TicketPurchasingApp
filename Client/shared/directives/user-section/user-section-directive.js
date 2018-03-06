@@ -10,7 +10,7 @@
                 scope.loginUser = {};
                 scope.signupUser = {};
                 scope.formState = 'login';
-                scope.user = userSvc.user.username;
+                scope.user = userSvc.user;
 
                 scope.changeFormState = function(state){
                     scope.formState = state;
@@ -43,21 +43,30 @@
                     $http.post('/user/login-user', scope.loginUser)
                     .then(function(response){
                         
-
                     }).catch(function(error) {
                         console.log(error)
                     })
 
                 }
+
+                function checkAdmin() 
+                {
+                    $http.post('/user/get-user-data', {"token":localStorage.getItem('ticketPriceInterpreter-token')}).then(function(response){
+                        userSvc.isAdmin = response.data ? response.data.isAdmin : {};
+                    }, function(err){
+                        console.log(err)
+                    })
+                }
+
                 scope.logUserOut = function(){
                     scope.isLoggedIn = false;
-
                     localStorage['ticketPriceInterpreter-token'] = undefined;
                     localStorage.clear();
                     scope.changeFormState('login');
                     window.location.reload();
                         
                 }
+                checkAdmin();
             }
         }
     }])

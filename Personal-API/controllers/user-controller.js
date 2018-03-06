@@ -17,6 +17,7 @@ module.exports.createUser = function(req, res){
         username: req.body.username,
         email: req.body.email,
         password: newPassword,
+        isAdmin: false
     }
 
     var newUser = new User(userData);
@@ -36,6 +37,7 @@ module.exports.loginUser = function(req, res){
    }
 
    User.find({$or: [{username: req.body.login}, {email: req.body.login}]}, function(err, user){
+       console.log(user);
        if(err){
            return res.status(500).send("Database is currently experiencing difficulties!");
        }
@@ -45,20 +47,35 @@ module.exports.loginUser = function(req, res){
        }
 
        var loggedUser = user[0];
+       var userData = {
+            username: loggedUser.username,
+            isAdmin: loggedUser.isAdmin
+       };
        var isVerified = bcrypt.compareSync(req.body.password, loggedUser.password);
 
        if (!isVerified){
            return res.status(400).send("Username or Password is incorrect!");
        }
 
-       loggedUser.password = undefined;
-       loggedUser.email = undefined;
-
-       var token = jwt.sign(loggedUser.toJSON(), process.env.APP_SECRET, {expiresIn: 60 * 60 * 24 * 1000});
+       var token = jwt.sign(userData, process.env.APP_SECRET, {expiresIn: 60 * 60 * 24 * 1000});
 
        res.json({
-           user: loggedUser,
+           user: loggedUser.username,
            token: token
        })
    })
+}
+
+module.exports.getUserData = function (req, res) {
+    if (!req.body.token) return res.status(400).send("No token specified, cannot continue.");
+    let token = req.body.token.replace(/["']/g, "");
+    console.log(token);
+    jwt.verify(token, process.env.APP_SECRET, function(err, decoded) {
+        if (err) return res.status(200).json({error:"invalidUser"})
+        let isAdmin = decoded.isAdmin;
+        if (isAdmin) return res.status(200).json({isAdmin:true})
+        else return res.status(200).json({isAdmin:false})
+        
+        
+    });
 }

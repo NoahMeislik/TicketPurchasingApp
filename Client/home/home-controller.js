@@ -3,16 +3,19 @@
     .controller('homeCtrl', ['$scope', '$http', '$state', '$window', 'userSvc', function($scope, $http, $state, $window, userSvc){
         $scope.artists =[]
         $scope.popularEvents = []
+        $scope.statistics = {}
         $scope.totalArtists = 0
         $scope.totalEvents = 0
         $scope.totalQueuedEvents = 0
         $scope.totalPurchasedEvents = 0;
         $scope.queuedEvent = {};
         $scope.purchasedEvents = []
-
+        $scope.isAdmin = userSvc.isAdmin
         $scope.userLoggedIn = userSvc.isLoggedIn;
+        console.log(userSvc['isAdmin']);
 
         function getArtists(){
+            
             $http.get('/artists/get-popular-artists').then(function(response){
                 $scope.artists = response.data ? response.data.artists : [];
                 $scope.totalArtists = response.data ? response.data.totalArtists : 0;
@@ -30,6 +33,16 @@
                 console.log(err)
             })
         }
+
+        function getStatistics(){
+            $http.get('/statistics/get-profit').then(function(response){
+                $scope.statistics.profit = response.data ? response.data.profit : {};
+            }, function(err){
+                console.log(err)
+            })
+        }
+
+
 
         function getQueuedEvents(){
             $http.get('/events/get-queued-events').then(function(response){
@@ -65,11 +78,14 @@
             $state.go('event', {eventID: eventId})
         }
 
+
+
         function init(){
             getArtists();
             getPopularEvents();
             getQueuedEvents();
             getPurchasedEvents();
+            getStatistics();
         }
         
         init()

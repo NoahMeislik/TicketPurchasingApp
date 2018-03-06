@@ -30,21 +30,6 @@ let cleanDeprecatedEvents = function()
         }
     });
 
-    // clean from queued events
-    queuedEvents.find({}, (err, events) => {
-        for (let i = 0; i < events.length; i++) {
-            let onsaleStartDateTime = events[i].onsaleStartDateTime;
-            onsaleStartDateTime = moment(onsaleStartDateTime, "YYYY-MM-DDTHH:mm:ssZ");
-            let difference = onsaleStartDateTime.diff(Date.now(), 'days');
-            if (difference < 0)
-            {
-                queuedEvents.findOneAndRemove({eventId: events[i].eventId}, function(err){
-                    console.log(`Removed event with ID ${events[i].eventId}`);
-                    if (err) return console.log(err);
-                });
-            }
-        }
-    });
 
     //clean from upcoming events
     upcomingEvents.find({}, (err, events) => {

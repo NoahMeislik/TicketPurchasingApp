@@ -21,6 +21,8 @@ var userRoutes = require(config.personalApiPaths.routes.userRoutes);
 var eventRoutes = require(config.personalApiPaths.routes.eventRoutes);
 var artistRoutes = require(config.personalApiPaths.routes.artistRoutes);
 var purchaseRoutes = require(config.personalApiPaths.routes.purchaseRoutes);
+var statisticRoutes = require(config.personalApiPaths.routes.statisticsRoute);
+
 
 //Modules
 let cleanDeprecatedModule = require(config.personalApiPaths.modules.cleanDeprecatedEvents);
@@ -31,6 +33,8 @@ app.use('/user', userRoutes);
 app.use('/events', eventRoutes);
 app.use('/artists', artistRoutes);
 app.use('/purchase', purchaseRoutes);
+app.use('/statistics', statisticRoutes);
+
 
 app.listen(config.port, function(){
     console.log(`Server Running on Port: ${config.port}`)
