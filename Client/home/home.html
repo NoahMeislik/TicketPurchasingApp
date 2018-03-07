@@ -207,8 +207,8 @@
 
             </div>
 
-            <h1 class="page-header">Statistics</h1>
-            <div class="row">
+            <h1 ng-if"isAdmin" class="page-header">Statistics</h1>
+            <div ng-if="isAdmin" class="row">
                 <div class="col-md-2 col-md-2">
                     <div class="panel panel-green" >
                         <div class="panel-heading">
@@ -220,10 +220,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <div ng-if="isAdmin">
-                <h1>papa bless</h1>
             </div>
             <!-- /.row -->
         </div>
