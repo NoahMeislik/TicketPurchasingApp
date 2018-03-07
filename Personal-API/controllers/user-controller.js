@@ -37,7 +37,6 @@ module.exports.loginUser = function(req, res){
    }
 
    User.find({$or: [{username: req.body.login}, {email: req.body.login}]}, function(err, user){
-       console.log(user);
        if(err){
            return res.status(500).send("Database is currently experiencing difficulties!");
        }
@@ -69,7 +68,6 @@ module.exports.loginUser = function(req, res){
 module.exports.getUserData = function (req, res) {
     if (!req.body.token) return res.status(400).send("No token specified, cannot continue.");
     let token = req.body.token.replace(/["']/g, "");
-    console.log(token);
     jwt.verify(token, process.env.APP_SECRET, function(err, decoded) {
         if (err) return res.status(200).json({error:"invalidUser"})
         let isAdmin = decoded.isAdmin;

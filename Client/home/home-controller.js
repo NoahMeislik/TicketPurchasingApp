@@ -10,10 +10,8 @@
         $scope.totalPurchasedEvents = 0;
         $scope.queuedEvent = {};
         $scope.purchasedEvents = []
-        $scope.isAdmin = userSvc.isAdmin
         $scope.userLoggedIn = userSvc.isLoggedIn;
-        console.log(userSvc['isAdmin']);
-
+        
         function getArtists(){
             
             $http.get('/artists/get-popular-artists').then(function(response){
@@ -74,6 +72,17 @@
             })
         }
 
+        function checkAdmin(){
+            $http.post('/user/get-user-data', {"token":localStorage.getItem('ticketPriceInterpreter-token')}).then(function(response){
+                $scope.isAdmin = response.data ? response.data.isAdmin : [];
+                console.log($scope.isAdmin)
+            }, function(err){
+                console.log(err)
+            })
+        }
+
+
+
         $scope.goToEvent = function(eventId) {
             $state.go('event', {eventID: eventId})
         }
@@ -86,6 +95,7 @@
             getQueuedEvents();
             getPurchasedEvents();
             getStatistics();
+            checkAdmin();
         }
         
         init()
