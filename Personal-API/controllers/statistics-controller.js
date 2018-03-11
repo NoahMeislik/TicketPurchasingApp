@@ -18,5 +18,17 @@ module.exports.getProfitStatistics = function (req, res) {
             profit: profit
         })
     });
+}
 
+module.exports.getStatistics = function (req, res) {
+    PurchasedEvent.find({}, (err, events) => {
+        let data = [[],[]];
+        for (let i = 0; i < events.length; i++) {
+            data[0].push(events[i].purchasePrice)
+            data[1].push(events[i].resalePrice)
+        }
+        res.json({
+            data: data
+        })
+    });
 }

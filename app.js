@@ -62,8 +62,8 @@ schedule.scheduleJob('0 0 * * *', () => {
 // Get popular events at 12:30 every night
 schedule.scheduleJob('30 0 * * *', () => {
     console.log("Grabbing popular events")
-    getPopularEventsModule.getPopularEvents();
 })
+getPopularEventsModule.getPopularEvents();
 
 
 //--/////////////////////--//

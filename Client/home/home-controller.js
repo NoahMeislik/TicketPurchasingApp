@@ -10,10 +10,11 @@
         $scope.totalPurchasedEvents = 0;
         $scope.queuedEvent = {};
         $scope.purchasedEvents = []
+        $scope.labels = ["Events"];
+        $scope.series = ['Purchase Price', 'Resale Price'];
         $scope.userLoggedIn = userSvc.isLoggedIn;
         
         function getArtists(){
-            
             $http.get('/artists/get-popular-artists').then(function(response){
                 $scope.artists = response.data ? response.data.artists : [];
                 $scope.totalArtists = response.data ? response.data.totalArtists : 0;
@@ -81,6 +82,36 @@
             })
         }
 
+        function getChartData() {
+            $http.get('/statistics/get-data').then(function(response){
+                $scope.data = response.data.data
+                console.log($scope.data);
+                $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
+                $scope.options = {
+                scales: {
+                    yAxes: [
+                    {
+                        id: 'y-axis-1',
+                        type: 'linear',
+                        display: true,
+                        position: 'left'
+                    },
+                    {
+                        id: 'y-axis-2',
+                        type: 'linear',
+                        display: true,
+                        position: 'right'
+                    }
+                    ]
+                }
+                };
+            })
+
+    
+            
+        
+
+        }
 
 
         $scope.goToEvent = function(eventId) {
@@ -96,6 +127,7 @@
             getPurchasedEvents();
             getStatistics();
             checkAdmin();
+            getChartData()
         }
         
         init()

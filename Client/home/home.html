@@ -209,7 +209,7 @@
 
             <h1 ng-if"isAdmin" class="page-header">Statistics</h1>
             <div ng-if="isAdmin" class="row">
-                <div class="col-md-2 col-md-2">
+                <div class="col-md-2 ">
                     <div class="panel panel-green" >
                         <div class="panel-heading">
                             <div class="row">
@@ -219,6 +219,12 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="col-md-5">
+                    <canvas id="line" class="chart chart-line" chart-data="data"
+                    chart-labels="labels" chart-series="series" chart-options="options"
+                    chart-dataset-override="datasetOverride" chart-click="onClick">
+                    </canvas>
                 </div>
             </div>
             <!-- /.row -->

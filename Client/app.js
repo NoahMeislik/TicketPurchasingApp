@@ -1,5 +1,5 @@
 (function(window, angular){
-    angular.module('ticketPriceInterpreter', ['ui.router'])
+    angular.module('ticketPriceInterpreter', ['ui.router', 'chart.js'])
 
     .config(['$urlRouterProvider', '$stateProvider', '$httpProvider', function($urlRouterProvider, $stateProvider, $httpProvider){
         $urlRouterProvider.otherwise('/');

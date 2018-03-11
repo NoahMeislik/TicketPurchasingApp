@@ -60,12 +60,11 @@ let downloadData = function() {
                         if (err) {
                             // TODO: Change this, I really cringe at the bad practice but oh well
                             if (err.name == "BulkWriteError") {
-                                return console.log("Duplicated data, skipping!");
+                                return;
                             } else {
                                 return console.log(err.name);
                             }
                         }
-                        console.log(`Adding new event to the datbase with ID: ${event.eventId}`);
                     });
                 }
             }

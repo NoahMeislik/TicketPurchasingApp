@@ -26,7 +26,6 @@ let getPopularEvents = function() {
             return res.status(500).send("Unable to query artists at this time");
         }
         for (let i = 0; i < artists.length; i += 1) {
-            console.log(`Checking for popular event for: ${artists[i].name}`);
             upcomingEvents.findOne({
                 "queryParameter": {
                     $regex: artists[i].name,
@@ -76,25 +75,12 @@ let getPopularEvents = function() {
                                         popularEvent = new PopularEvent(eventInfo)
         
                                         popularEvent.save(function(err) {
-                                            if (err) {
-                                                if (err.name == "BulkWriteError") {
-                                                    return console.log("Duplicated data, skipping!");
-                                                } 
-                                                else {
-                                                    return console.log(err);
-                                                }
-                                            }
+                                            if (err)return console.log(err);
                                             else console.log("Saved new popular event to DB");
                                         });
                                     });
                                 }
                             })
-
-                    }
-
-                    else
-                    {
-                        console.log("Event already queued")
                     }
                     });
                   }
